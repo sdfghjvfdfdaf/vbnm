@@ -63,13 +63,14 @@
     .egg-button { position: relative; z-index: 1; display: grid; width: min(var(--egg-size, 210px), 78vw); aspect-ratio: 1; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; transition: width .22s ease; -webkit-tap-highlight-color: transparent; }
     .egg { position: relative; display: block; width: 88%; height: 96%; border: 4px solid #b98a4f; border-radius: 50% 50% 45% 45% / 59% 59% 41% 41%; background: radial-gradient(ellipse at 34% 24%, #fffef0 0 8%, transparent 9%), linear-gradient(135deg, #fffef2 10%, #f8e6ad 63%, #e8c77d 100%); box-shadow: inset -10px -12px 0 #e7ce94, inset 7px 8px 0 #fffef8, 0 13px 0 #b18a51, 0 20px 24px #9b723533; transition: transform .08s ease, filter .15s ease; }
     .egg-button:hover .egg { filter: brightness(1.04); transform: translateY(-3px) rotate(-2deg); }
-    .egg-button:active .egg, .egg-button.bop .egg { transform: scale(.94) rotate(3deg); }
+    .egg-button.bop .egg { animation: egg-bop .34s cubic-bezier(.2, .8, .25, 1); }
     .egg-face { position: absolute; top: 43%; left: 50%; width: 42%; transform: translateX(-50%); }
     .eyes { display: flex; justify-content: space-around; }
     .eye { width: 9px; height: 13px; border-radius: 50%; background: #39221c; }
     .smile { width: 18px; height: 9px; margin: 5px auto 0; border-bottom: 3px solid #71351f; border-radius: 0 0 15px 15px; }
     .tap-hint { z-index: 1; margin: 15px 0 0; color: #815a44; font-size: 12px; font-weight: 800; letter-spacing: .8px; }
     .float-text { position: absolute; z-index: 3; color: #b44155; font: 800 20px Georgia, serif; pointer-events: none; animation: float-up .75s ease-out forwards; }
+    @keyframes egg-bop { 0% { transform: scale(1); } 32% { transform: scale(.78, .82) rotate(3deg); } 70% { transform: scale(1.14, 1.12) rotate(-2deg); } 100% { transform: scale(1) rotate(0); } }
     @keyframes float-up { to { opacity: 0; transform: translateY(-70px) rotate(-8deg); } }
 
     .shop { display: flex; min-height: 480px; flex-direction: column; padding: 20px; }
@@ -92,12 +93,14 @@
     .pet-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
     .pet-heading h3 { margin: 0; font: 700 19px Georgia, serif; }
     .pet-heading span { color: var(--muted); font-size: 11px; font-weight: 800; }
+    .pet-bonus { margin-top: 8px; color: #3a8067; font-size: 11px; font-weight: 900; }
     .pet-chances { margin: 8px 0 10px; color: var(--muted); font-size: 10px; line-height: 1.6; }
     .pet-buy { min-height: 62px; }
     .pet-buy .upgrade-icon { background: #fff0bf; }
     .pet-collection { display: grid; gap: 5px; margin-top: 12px; }
     .pet-empty { margin: 0; color: var(--muted); font-size: 11px; }
     .pet-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--ink); font-size: 11px; }
+    .pet-row-copy { display: grid; gap: 2px; }
     .pet-row small { color: var(--muted); }
     .pet-row.common strong { color: #64816d; }
     .pet-row.rare strong { color: #3a85a0; }
@@ -163,6 +166,7 @@
         <div class="upgrade-list" id="upgrade-list"></div>
         <section class="pet-shop" aria-label="Pet egg shop">
           <div class="pet-heading"><h3>Pet eggs</h3><span id="pet-count">0 pets</span></div>
+          <div class="pet-bonus" id="pet-bonus">Pet boost: +0% egg income</div>
           <p class="pet-chances">Common 75% · Rare 20% · Super Rare 4.98% · Mythic 0.02% (1 in 5,000)</p>
           <button class="upgrade pet-buy" id="pet-egg-button" type="button" aria-label="Buy and hatch a pet egg for 100 eggs">
             <span class="upgrade-icon" aria-hidden="true">🥚</span>
@@ -187,12 +191,12 @@
     ];
     const petEggCost = 100;
     const petTiers = [
-      { rarity: "Common", className: "common", pets: [{ id: "sprout", name: "Sprout", icon: "🐣" }, { id: "crumb", name: "Crumb", icon: "🐤" }, { id: "moss", name: "Moss", icon: "🐥" }] },
-      { rarity: "Rare", className: "rare", pets: [{ id: "puddle", name: "Puddle", icon: "🦆" }, { id: "pippin", name: "Pippin", icon: "🐰" }, { id: "shellby", name: "Shellby", icon: "🐢" }] },
-      { rarity: "Super Rare", className: "super-rare", pets: [{ id: "ember", name: "Ember", icon: "🦊" }, { id: "comet", name: "Comet", icon: "🐲" }, { id: "moonbeam", name: "Moonbeam", icon: "🦄" }] },
-      { rarity: "Mythic", className: "mythic", pets: [{ id: "starflame", name: "Starflame", icon: "🐉" }] }
+      { rarity: "Common", className: "common", bonus: 0.01, pets: [{ id: "sprout", name: "Sprout", icon: "🐣" }, { id: "crumb", name: "Crumb", icon: "🐤" }, { id: "moss", name: "Moss", icon: "🐥" }] },
+      { rarity: "Rare", className: "rare", bonus: 0.03, pets: [{ id: "puddle", name: "Puddle", icon: "🦆" }, { id: "pippin", name: "Pippin", icon: "🐰" }, { id: "shellby", name: "Shellby", icon: "🐢" }] },
+      { rarity: "Super Rare", className: "super-rare", bonus: 0.08, pets: [{ id: "ember", name: "Ember", icon: "🦊" }, { id: "comet", name: "Comet", icon: "🐲" }, { id: "moonbeam", name: "Moonbeam", icon: "🦄" }] },
+      { rarity: "Mythic", className: "mythic", bonus: 0.5, pets: [{ id: "starflame", name: "Starflame", icon: "🐉" }] }
     ];
-    const petById = Object.fromEntries(petTiers.flatMap(tier => tier.pets.map(pet => [pet.id, { ...pet, rarity: tier.rarity, className: tier.className }])));
+    const petById = Object.fromEntries(petTiers.flatMap(tier => tier.pets.map(pet => [pet.id, { ...pet, rarity: tier.rarity, className: tier.className, bonus: tier.bonus }])));
     const defaults = { eggs: 0, lifetime: 0, bestRun: 0, clickPower: 1, clicks: 0, owned: {}, pets: {}, sound: true, lastSaved: Date.now() };
     let state = loadState();
     let toastTimer;
@@ -217,7 +221,7 @@
           lastSaved: Number(saved.lastSaved) || Date.now()
         };
         const elapsed = Math.min(8 * 60 * 60, Math.max(0, (Date.now() - Number(saved.lastSaved || Date.now())) / 1000));
-        const offlineEggs = Math.floor(eggsPerSecond(owned) * elapsed);
+        const offlineEggs = Math.floor(eggsPerSecond(owned, pets) * elapsed);
         result.eggs += offlineEggs;
         result.lifetime += offlineEggs;
         if (offlineEggs > 0) setTimeout(() => showToast(`Welcome back! Your coop made ${format(offlineEggs)} eggs.`), 300);
@@ -236,8 +240,13 @@
       return `${amount.toFixed(amount < 10 ? 1 : 0)}${units[unit]}`;
     }
 
-    function eggsPerSecond(owned = state.owned) {
-      return upgrades.reduce((total, item) => total + (item.type === "auto" ? item.effect * (owned[item.id] || 0) : 0), 0);
+    function petIncomeBonus(pets = state.pets) {
+      return Object.entries(pets).reduce((total, [id, count]) => total + (petById[id]?.bonus || 0) * count, 0);
+    }
+
+    function eggsPerSecond(owned = state.owned, pets = state.pets) {
+      const baseRate = upgrades.reduce((total, item) => total + (item.type === "auto" ? item.effect * (owned[item.id] || 0) : 0), 0);
+      return baseRate * (1 + petIncomeBonus(pets));
     }
 
     function costFor(item) {
@@ -256,6 +265,7 @@
       document.getElementById("click-power").textContent = `+${format(state.clickPower)}`;
       document.getElementById("best-run").textContent = format(state.bestRun);
       document.getElementById("egg-button").style.setProperty("--egg-size", `${Math.min(340, 210 + state.clicks * 1.3)}px`);
+      document.getElementById("pet-bonus").textContent = `Pet boost: +${(petIncomeBonus() * 100).toFixed(0)}% egg income`;
       const nextCost = Math.min(petEggCost, ...upgrades.map(costFor));
       document.getElementById("meter-fill").style.width = `${Math.min(100, state.eggs / nextCost * 100)}%`;
       const list = document.getElementById("upgrade-list");
@@ -285,11 +295,16 @@
           const pet = petById[id];
           const row = document.createElement("div");
           row.className = `pet-row ${pet.className}`;
+          const copy = document.createElement("span");
+          copy.className = "pet-row-copy";
           const name = document.createElement("strong");
           name.textContent = `${pet.icon} ${pet.name} · ${pet.rarity}`;
+          const perk = document.createElement("small");
+          perk.textContent = `+${(pet.bonus * 100).toFixed(0)}% egg income`;
           const quantity = document.createElement("small");
           quantity.textContent = `×${count}`;
-          row.append(name, quantity);
+          copy.append(name, perk);
+          row.append(copy, quantity);
           return row;
         }));
       }
@@ -324,8 +339,9 @@
     }
 
     function bake(event) {
-      state.eggs += state.clickPower;
-      state.lifetime += state.clickPower;
+      const earned = state.clickPower * (1 + petIncomeBonus());
+      state.eggs += earned;
+      state.lifetime += earned;
       state.clicks++;
       state.bestRun = Math.max(state.bestRun, state.lifetime);
       const button = document.getElementById("egg-button");
@@ -335,7 +351,7 @@
       const bounds = button.getBoundingClientRect();
       const float = document.createElement("span");
       float.className = "float-text";
-      float.textContent = `+${format(state.clickPower)}`;
+      float.textContent = `+${format(earned)}`;
       float.style.left = `${Math.max(8, Math.min(window.innerWidth - 68, (event.clientX || bounds.left + bounds.width / 2) - 12))}px`;
       float.style.top = `${Math.max(24, (event.clientY || bounds.top + bounds.height / 2) - 8)}px`;
       document.body.append(float);

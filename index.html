@@ -50,6 +50,73 @@
     .score-right { text-align: right; }
     .meter { width: 100%; height: 6px; margin-top: 7px; overflow: hidden; border-radius: 9px; background: #f1e4d1; }
     .meter-fill { width: 0; height: 100%; border-radius: inherit; background: var(--mint); transition: width .25s ease; }
+    .main-tabs { display: flex; gap: 5px; margin: 20px 0 16px; padding: 4px; overflow-x: auto; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); }
+    .main-tab { flex: 1; min-width: max-content; min-height: 40px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); font-weight: 900; cursor: pointer; }
+    .main-tab[aria-selected="true"] { background: var(--ink); color: white; }
+    .tab-panel[hidden] { display: none; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 8px 0 18px; }
+    .section-heading .eyebrow { margin-bottom: 5px; }
+    .section-heading h1 { font-size: 34px; }
+    .arcade-wallet { color: var(--muted); font-size: 12px; font-weight: 800; }
+    .arcade-wallet strong { color: var(--ink); font-size: 15px; }
+    .arcade-tabs { display: flex; gap: 6px; margin-bottom: 15px; padding: 4px; overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+    .arcade-tab { flex: 1; min-width: max-content; min-height: 42px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 900; cursor: pointer; }
+    .arcade-tab[aria-selected="true"] { background: #d9eee2; color: #265540; }
+    .arcade-game[hidden] { display: none; }
+    .arcade-game { min-height: 330px; padding: 24px; border: 2px solid var(--ink); border-radius: 16px; background: var(--paper); text-align: center; }
+    .arcade-game h2, .zone-heading h2 { margin: 0; font: 700 24px Georgia, serif; }
+    .game-copy { margin: 8px 0 17px; color: var(--muted); font-size: 12px; }
+    .slot-reels, .scratch-slots { display: flex; justify-content: center; gap: 10px; margin: 22px 0; }
+    .slot-reels span, .scratch-slots span { display: grid; width: 76px; height: 76px; place-items: center; border: 2px solid var(--line); border-radius: 12px; background: #fff3d6; font-size: 38px; }
+    .scratch-slots span { border-color: #e3bd67; background: #ffeab0; font-size: 32px; }
+    .wheel-display { width: 128px; height: 128px; display: grid; place-items: center; margin: 18px auto; border: 6px solid var(--gold); border-radius: 50%; background: conic-gradient(#f7c35a 0 60deg, #ea7180 60deg 120deg, #83cdb0 120deg 180deg, #f7c35a 180deg 240deg, #ea7180 240deg 300deg, #83cdb0 300deg); font-size: 56px; text-shadow: 0 2px white; }
+    .wheel-display.turning { animation: wheel-spin .75s ease-out; }
+    @keyframes wheel-spin { to { transform: rotate(900deg); } }
+    .action-button { min-height: 42px; padding: 0 18px; border: 2px solid var(--ink); border-radius: 10px; background: var(--gold); color: var(--ink); font-weight: 900; cursor: pointer; }
+    .action-button:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.03); }
+    .action-button:disabled { cursor: not-allowed; opacity: .48; }
+    .game-result { min-height: 18px; margin: 12px 0 0; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .flappy-game { display: grid; grid-template-columns: 1fr auto; justify-items: center; align-items: start; gap: 0 20px; text-align: left; }
+    .flappy-game > div:first-child { justify-self: start; }
+    .flappy-stats { display: grid; gap: 4px; color: var(--muted); font-size: 11px; text-align: right; }
+    .flappy-stats strong { color: var(--ink); font-size: 15px; }
+    #flappy-canvas { grid-column: 1 / -1; display: block; width: min(360px, 100%); height: auto; margin: 12px auto; border: 2px solid var(--ink); border-radius: 12px; background: #c9eff5; touch-action: manipulation; }
+    .flappy-game .action-button { grid-column: 1 / -1; }
+    .flappy-game .game-result { grid-column: 1 / -1; }
+    .pet-zone { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 28px; margin-top: 20px; }
+    .pet-zone-section { min-width: 0; }
+    .pet-zone-section + .pet-zone-section { padding-left: 25px; border-left: 1px solid var(--line); }
+    .zone-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 13px; }
+    .zone-heading span { color: var(--muted); font-size: 10px; }
+    .egg-shop-list { display: grid; gap: 10px; }
+    .egg-shop-button { display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 10px; min-height: 75px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); text-align: left; cursor: pointer; }
+    .egg-shop-button:hover:not(:disabled) { border-color: var(--ink); transform: translateY(-1px); }
+    .egg-shop-button:disabled { opacity: .52; cursor: not-allowed; }
+    .egg-shop-icon { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 11px; background: #ffefc0; font-size: 23px; }
+    .egg-shop-button.god-egg .egg-shop-icon { background: #e9dcff; }
+    .egg-shop-name { display: block; font-size: 13px; font-weight: 900; }
+    .egg-shop-chance { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .egg-shop-price { color: #a64e3d; font-size: 12px; font-weight: 900; text-align: right; white-space: nowrap; }
+    .zoo-list { gap: 8px; margin-top: 0; }
+    .zoo-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; min-height: 58px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+    .zoo-pet-info { display: grid; gap: 3px; }
+    .zoo-pet-name { font-size: 12px; font-weight: 900; }
+    .zoo-pet-perk { color: var(--muted); font-size: 10px; }
+    .zoo-quantity { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .equip-button { min-width: 80px; min-height: 32px; border: 1px solid var(--line); border-radius: 8px; background: #fffdf8; color: var(--ink); font-size: 10px; font-weight: 900; cursor: pointer; }
+    .equip-button:disabled { opacity: .45; cursor: not-allowed; }
+    .pet-empty { padding: 14px 0; }
+    .rebirth-panel { max-width: 580px; margin-bottom: 28px; padding: 22px; border: 2px solid var(--ink); border-radius: 14px; background: var(--paper); }
+    .achievement-section { padding-top: 20px; border-top: 1px solid var(--line); }
+    .settings-list { max-width: 720px; border-top: 1px solid var(--line); }
+    .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 74px; padding: 12px 8px; border-bottom: 1px solid var(--line); }
+    .setting-row strong, .setting-row small { display: block; }
+    .setting-row strong { font-size: 13px; }
+    .setting-row small { margin-top: 4px; color: var(--muted); font-size: 11px; }
+    .setting-toggle { min-width: 66px; min-height: 34px; border: 1px solid var(--line); border-radius: 9px; background: #d9eee2; color: #265540; font-weight: 900; cursor: pointer; }
+    .setting-toggle[aria-checked="false"] { background: #f5ebd9; color: var(--muted); }
+    .save-status { color: #3a8067; font-size: 11px; font-weight: 900; }
+    .danger-button { background: #f8d8d8; }
 
     .layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, .9fr); gap: 18px; align-items: stretch; }
     .bakery, .shop { border: 2px solid var(--ink); border-radius: 18px; background: var(--paper); box-shadow: 0 5px 0 var(--ink); }
@@ -145,6 +212,9 @@
       .bottom-note { margin-top: 18px; }
       .progression { grid-template-columns: 1fr; }
       .rebirth-panel { padding: 17px 0 0; border-top: 1px solid var(--line); border-left: 0; }
+      .pet-zone { grid-template-columns: 1fr; gap: 22px; }
+      .pet-zone-section + .pet-zone-section { padding: 20px 0 0; border-top: 1px solid var(--line); border-left: 0; }
+      .achievement-list { grid-template-columns: 1fr; }
     }
     @media (max-width: 390px) {
       .brand-name { font-size: 15px; }
@@ -163,10 +233,6 @@
         <div class="brand-mark" aria-hidden="true">🥚</div>
         <div><div class="brand-name">Kumar's Egg Club</div><div class="brand-note">Fresh from Chris's coop</div></div>
       </div>
-      <div class="top-actions">
-        <button class="icon-button" id="sound-button" type="button" aria-label="Toggle sound" title="Toggle sound">♪</button>
-        <button class="icon-button" id="reset-button" type="button" aria-label="Reset game" title="Reset game">↻</button>
-      </div>
     </header>
 
     <section class="scorebar" aria-label="Egg score">
@@ -175,8 +241,17 @@
       <div class="score-right"><div class="score-label">Collected all-time</div><div class="score-number" id="lifetime">0</div></div>
     </section>
 
+    <nav class="main-tabs" role="tablist" aria-label="Game sections">
+      <button class="main-tab" id="tab-clicker" type="button" role="tab" aria-selected="true" aria-controls="clicker-tab" data-tab-target="clicker-tab">Egg farm</button>
+      <button class="main-tab" id="tab-arcade" type="button" role="tab" aria-selected="false" aria-controls="arcade-tab" data-tab-target="arcade-tab">Arcade</button>
+      <button class="main-tab" id="tab-pets" type="button" role="tab" aria-selected="false" aria-controls="pets-tab" data-tab-target="pets-tab">Pets</button>
+      <button class="main-tab" id="tab-rebirth" type="button" role="tab" aria-selected="false" aria-controls="rebirth-tab" data-tab-target="rebirth-tab">Rebirth</button>
+      <button class="main-tab" id="tab-settings" type="button" role="tab" aria-selected="false" aria-controls="settings-tab" data-tab-target="settings-tab">Settings</button>
+    </nav>
+
+    <section class="tab-panel" id="clicker-tab" role="tabpanel" aria-labelledby="tab-clicker">
     <div class="layout">
-      <section class="bakery" aria-label="Cookie bakery">
+      <section class="bakery" aria-label="Egg farm">
         <p class="eyebrow">The one and only</p>
         <h1>Chris Kumar's<br>Egg Clicker</h1>
         <p class="subtitle">Tap the egg. Watch it grow. Hatch a pet.</p>
@@ -186,42 +261,77 @@
         <p class="tap-hint">TAP THE EGG TO COLLECT</p>
       </section>
 
-      <aside class="shop" aria-label="Egg shop and pets">
+      <aside class="shop" aria-label="Egg upgrades">
         <div class="shop-heading"><h2>Egg upgrades</h2><span>Collect more</span></div>
         <div class="buy-mode" role="group" aria-label="Upgrade purchase amount">
           <button class="mode-button" id="buy-one" type="button" aria-pressed="true">Buy 1</button>
           <button class="mode-button" id="buy-max" type="button" aria-pressed="false">Buy max</button>
         </div>
         <div class="upgrade-list" id="upgrade-list"></div>
-        <section class="pet-shop" aria-label="Pet egg shop">
-          <div class="pet-heading"><h3>Pet eggs</h3><span id="pet-count">0 pets</span></div>
-          <div class="pet-bonus" id="pet-bonus">Pet boost: +0% egg income</div>
-          <p class="pet-chances">Common 75% · Rare 20% · Super Rare 4.98% · Mythic 0.02% (1 in 5,000)</p>
-          <button class="upgrade pet-buy" id="pet-egg-button" type="button" aria-label="Buy and hatch a pet egg for 100 eggs">
-            <span class="upgrade-icon" aria-hidden="true">🥚</span>
-            <span><span class="upgrade-name">Buy pet egg</span><span class="upgrade-desc">Hatch one surprise pet</span></span>
-            <span class="upgrade-cost">100 eggs</span>
-          </button>
-          <div class="pet-collection" id="pet-collection" aria-live="polite"></div>
-        </section>
         <div class="bottom-note"><span>Click power <strong id="click-power">+1</strong></span><span>Best run <strong id="best-run">0</strong></span></div>
       </aside>
     </div>
-    <section class="progression" aria-label="Achievements and rebirth">
-      <div>
-        <h2>Achievements</h2>
-        <p class="progression-intro">Reach milestones to earn bonus eggs.</p>
-        <div class="achievement-list" id="achievement-list" aria-live="polite"></div>
+    </section>
+    <section class="tab-panel" id="arcade-tab" role="tabpanel" aria-labelledby="tab-arcade" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Spend eggs, win eggs</p><h1>Arcade</h1></div><div class="arcade-wallet">Balance <strong id="arcade-balance">0</strong> 🥚</div></div>
+      <div class="arcade-tabs" role="tablist" aria-label="Arcade games">
+        <button class="arcade-tab" id="arcade-tab-slots" type="button" aria-selected="true" data-arcade-game="slots">🎰 Slots</button>
+        <button class="arcade-tab" id="arcade-tab-wheel" type="button" aria-selected="false" data-arcade-game="wheel">🎡 Wheel</button>
+        <button class="arcade-tab" id="arcade-tab-scratch" type="button" aria-selected="false" data-arcade-game="scratch">🎟 Scratch card</button>
+        <button class="arcade-tab" id="arcade-tab-flappy" type="button" aria-selected="false" data-arcade-game="flappy">🐤 Flappy bird</button>
       </div>
-      <div class="rebirth-panel">
-        <h2>Rebirth</h2>
-        <p class="progression-intro">Start a fresh run for a permanent boost.</p>
+      <section class="arcade-game" id="game-slots">
+        <h2>Lucky slots</h2><p class="game-copy">Match symbols to win. Three of a kind pays 1,000 eggs; a pair pays 100.</p>
+        <div class="slot-reels" id="slot-reels" aria-live="polite"><span>🥚</span><span>⭐</span><span>🐣</span></div>
+        <button class="action-button" id="slot-play" type="button">Spin · 100 eggs</button><p class="game-result" id="slot-result">Ready when you are.</p>
+      </section>
+      <section class="arcade-game" id="game-wheel" hidden>
+        <h2>Wheel of fortune</h2><p class="game-copy">Spin for a random egg prize. One spin costs 250 eggs.</p>
+        <div class="wheel-display" id="wheel-display" aria-live="polite">🎡</div>
+        <button class="action-button" id="wheel-play" type="button">Spin wheel · 250 eggs</button><p class="game-result" id="wheel-result">Prizes: 0, 100, 250, 500, 1,000, or 5,000 eggs.</p>
+      </section>
+      <section class="arcade-game" id="game-scratch" hidden>
+        <h2>Lucky scratch</h2><p class="game-copy">Reveal three symbols. Match three for 10,000 eggs, or a pair for 1,000.</p>
+        <div class="scratch-slots" id="scratch-slots"><span>?</span><span>?</span><span>?</span></div>
+        <button class="action-button" id="scratch-play" type="button">Scratch · 500 eggs</button><p class="game-result" id="scratch-result">A card costs 500 eggs.</p>
+      </section>
+      <section class="arcade-game flappy-game" id="game-flappy" hidden>
+        <div><h2>Flappy bird</h2><p class="game-copy">Tap or press Space to flap. Earn 25 eggs for every pipe passed.</p></div>
+        <div class="flappy-stats">Score <strong id="flappy-score">0</strong><span>Best <strong id="flappy-best">0</strong></span></div>
+        <canvas id="flappy-canvas" width="360" height="480" aria-label="Flappy Bird game. Tap or press Space to flap."></canvas>
+        <button class="action-button" id="flappy-start" type="button">Start flying</button><p class="game-result" id="flappy-result">Your flight is ready.</p>
+      </section>
+    </section>
+    <section class="tab-panel" id="pets-tab" role="tabpanel" aria-labelledby="tab-pets" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Your flock and friends</p><h1>Pets &amp; eggs</h1></div><div class="arcade-wallet"><span id="pet-count">0 pets</span> · <strong id="equipped-count">0 / 5 equipped</strong></div></div>
+      <div class="pet-bonus" id="pet-bonus">Equipped bonus: +0% egg income</div>
+      <div class="pet-zone">
+        <section class="pet-zone-section"><div class="zone-heading"><h2>Egg shop</h2><span>Prices double after every purchase</span></div>
+          <div class="egg-shop-list" id="egg-shop-list"></div>
+        </section>
+        <section class="pet-zone-section"><div class="zone-heading"><h2>Your zoo</h2><span>Equip up to five pets</span></div>
+          <div class="pet-collection zoo-list" id="pet-collection" aria-live="polite"></div>
+        </section>
+      </div>
+    </section>
+    <section class="tab-panel" id="rebirth-tab" role="tabpanel" aria-labelledby="tab-rebirth" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Start again, stronger</p><h1>Rebirth</h1></div></div>
+      <section class="rebirth-panel"><h2>Permanent progress</h2><p class="progression-intro">Trade this run's eggs and upgrades for rebirth stars.</p>
         <div class="rebirth-stats"><span>Stars <strong id="rebirth-stars">0</strong></span><span>Permanent bonus <strong id="rebirth-bonus">+0%</strong></span></div>
         <div class="rebirth-meter"><div class="rebirth-meter-fill" id="rebirth-meter-fill"></div></div>
         <p class="rebirth-progress" id="rebirth-progress">0 / 10,000 run eggs</p>
         <button class="rebirth-button" id="rebirth-button" type="button" disabled>Rebirth</button>
         <p class="rebirth-note">Earn 1 star per 10,000 eggs collected this run. Rebirth resets eggs and upgrades, but keeps your pets, achievements, and stars. Each star adds +10% egg income.</p>
-      </div>
+      </section>
+      <section class="achievement-section"><div class="zone-heading"><h2>Achievements</h2><span>Milestones award bonus eggs</span></div><div class="achievement-list" id="achievement-list" aria-live="polite"></div></section>
+    </section>
+    <section class="tab-panel" id="settings-tab" role="tabpanel" aria-labelledby="tab-settings" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Make it yours</p><h1>Settings</h1></div></div>
+      <section class="settings-list">
+        <div class="setting-row"><div><strong>Click sounds</strong><small>Play a soft sound when you collect eggs.</small></div><button class="setting-toggle" id="sound-button" type="button" role="switch" aria-checked="true">On</button></div>
+        <div class="setting-row"><div><strong>Saved progress</strong><small>Your game saves automatically in this browser.</small></div><span class="save-status">Auto-save on</span></div>
+        <div class="setting-row danger-row"><div><strong>Reset all progress</strong><small>Clears eggs, pets, achievements, and rebirths.</small></div><button class="action-button danger-button" id="reset-button" type="button">Reset game</button></div>
+      </section>
     </section>
     <footer class="footer">A little sugar, a lot of Kumar.</footer>
   </main>
@@ -234,14 +344,19 @@
       { id: "oven", name: "Cozy coop", description: "+6 eggs per second", icon: "🐔", baseCost: 180, effect: 6, type: "auto" },
       { id: "bakery", name: "Kumar egg farm", description: "+25 eggs per second", icon: "🏠", baseCost: 700, effect: 25, type: "auto" }
     ];
-    const petEggCost = 100;
+    const petEggs = {
+      normal: { name: "Normal egg", icon: "🥚", baseCost: 10000, chances: "Common 75% · Rare 20% · Super Rare 4.98% · Mythic 0.02%" },
+      god: { name: "God egg", icon: "🌟", baseCost: 5000000000, chances: "Rare 30% · Super Rare 50% · Mythic 19% · God 1%" }
+    };
     const petTiers = [
       { rarity: "Common", className: "common", bonus: 0.01, pets: [{ id: "sprout", name: "Sprout", icon: "🐣" }, { id: "crumb", name: "Crumb", icon: "🐤" }, { id: "moss", name: "Moss", icon: "🐥" }] },
       { rarity: "Rare", className: "rare", bonus: 0.03, pets: [{ id: "puddle", name: "Puddle", icon: "🦆" }, { id: "pippin", name: "Pippin", icon: "🐰" }, { id: "shellby", name: "Shellby", icon: "🐢" }] },
       { rarity: "Super Rare", className: "super-rare", bonus: 0.08, pets: [{ id: "ember", name: "Ember", icon: "🦊" }, { id: "comet", name: "Comet", icon: "🐲" }, { id: "moonbeam", name: "Moonbeam", icon: "🦄" }] },
-      { rarity: "Mythic", className: "mythic", bonus: 0.5, pets: [{ id: "starflame", name: "Starflame", icon: "🐉" }] }
+      { rarity: "Mythic", className: "mythic", bonus: 0.5, pets: [{ id: "starflame", name: "Starflame", icon: "🐉" }] },
+      { rarity: "God", className: "god", bonus: 2, pets: [{ id: "aurora", name: "Aurora", icon: "🪽" }, { id: "solaris", name: "Solaris", icon: "☀️" }] }
     ];
     const petById = Object.fromEntries(petTiers.flatMap(tier => tier.pets.map(pet => [pet.id, { ...pet, rarity: tier.rarity, className: tier.className, bonus: tier.bonus }])));
+    const petIds = Object.keys(petById);
     const rebirthRequirement = 10000;
     const achievements = [
       { id: "first-click", icon: "👆", name: "First tap", description: "Click the egg once", reward: 10, check: game => game.clicks >= 1 },
@@ -252,17 +367,37 @@
       { id: "mythic-pet", icon: "🌟", name: "Mythic moment", description: "Hatch a Mythic pet", reward: 1000, check: game => game.pets.starflame > 0 },
       { id: "first-rebirth", icon: "♻️", name: "Fresh start", description: "Rebirth for the first time", reward: 1000, check: game => game.rebirths >= 1 }
     ];
-    const defaults = { eggs: 0, lifetime: 0, runEggs: 0, bestRun: 0, clickPower: 1, clicks: 0, rebirths: 0, owned: {}, pets: {}, achievements: {}, buyMode: "one", sound: true, lastSaved: Date.now() };
+    const defaults = { eggs: 0, lifetime: 0, runEggs: 0, bestRun: 0, clickPower: 1, clicks: 0, rebirths: 0, owned: {}, pets: {}, equipped: {}, eggPurchases: { normal: 0, god: 0 }, achievements: {}, arcadeBest: 0, buyMode: "one", activeTab: "clicker", arcadeGame: "slots", sound: true, lastSaved: Date.now() };
     let state = loadState();
     let toastTimer;
     let audioContext;
 
+    function createFreshState() {
+      return {
+        ...defaults,
+        owned: Object.fromEntries(upgrades.map(item => [item.id, 0])),
+        pets: Object.fromEntries(petIds.map(id => [id, 0])),
+        equipped: Object.fromEntries(petIds.map(id => [id, 0])),
+        eggPurchases: { normal: 0, god: 0 },
+        achievements: Object.fromEntries(achievements.map(item => [item.id, false]))
+      };
+    }
+
     function loadState() {
       try {
         const saved = JSON.parse(localStorage.getItem("kumar-cookie-club"));
-        if (!saved || typeof saved !== "object") return { ...defaults, owned: {} };
+        if (!saved || typeof saved !== "object") return createFreshState();
         const owned = Object.fromEntries(upgrades.map(item => [item.id, Math.max(0, Number(saved.owned?.[item.id]) || 0)]));
         const pets = Object.fromEntries(Object.keys(petById).map(id => [id, Math.max(0, Number(saved.pets?.[id]) || 0)]));
+        const equipped = Object.fromEntries(petIds.map(id => [id, 0]));
+        let openPetSlots = 5;
+        const strongestFirst = [...petIds].sort((first, second) => petById[second].bonus - petById[first].bonus);
+        for (const id of strongestFirst) {
+          const desired = saved.equipped ? Number(saved.equipped[id]) || 0 : pets[id];
+          const count = Math.min(pets[id], Math.max(0, desired), openPetSlots);
+          equipped[id] = count;
+          openPetSlots -= count;
+        }
         const unlockedAchievements = Object.fromEntries(achievements.map(item => [item.id, Boolean(saved.achievements?.[item.id])]));
         const result = {
           ...defaults,
@@ -275,13 +410,18 @@
           rebirths: Math.max(0, Math.floor(Number(saved.rebirths) || 0)),
           owned,
           pets,
+          equipped,
+          eggPurchases: { normal: Math.max(0, Number(saved.eggPurchases?.normal) || 0), god: Math.max(0, Number(saved.eggPurchases?.god) || 0) },
           achievements: unlockedAchievements,
+          arcadeBest: Math.max(0, Number(saved.arcadeBest) || 0),
           buyMode: saved.buyMode === "max" ? "max" : "one",
+          activeTab: ["clicker", "arcade", "pets", "rebirth", "settings"].includes(saved.activeTab) ? saved.activeTab : "clicker",
+          arcadeGame: ["slots", "wheel", "scratch", "flappy"].includes(saved.arcadeGame) ? saved.arcadeGame : "slots",
           sound: saved.sound !== false,
           lastSaved: Number(saved.lastSaved) || Date.now()
         };
         const elapsed = Math.min(8 * 60 * 60, Math.max(0, (Date.now() - Number(saved.lastSaved || Date.now())) / 1000));
-        const offlineEggs = Math.floor(eggsPerSecond(owned, pets, result.rebirths) * elapsed);
+        const offlineEggs = Math.floor(eggsPerSecond(owned, equipped, result.rebirths) * elapsed);
         result.eggs += offlineEggs;
         result.lifetime += offlineEggs;
         result.runEggs += offlineEggs;
@@ -289,7 +429,7 @@
         if (offlineEggs > 0) setTimeout(() => showToast(`Welcome back! Your coop made ${format(offlineEggs)} eggs.`), 300);
         return result;
       } catch {
-        return { ...defaults, owned: {} };
+        return createFreshState();
       }
     }
 
@@ -302,7 +442,7 @@
       return `${amount.toFixed(amount < 10 ? 1 : 0)}${units[unit]}`;
     }
 
-    function petIncomeBonus(pets = state.pets) {
+    function petIncomeBonus(pets = state.equipped) {
       return Object.entries(pets).reduce((total, [id, count]) => total + (petById[id]?.bonus || 0) * count, 0);
     }
 
@@ -310,13 +450,21 @@
       return Object.values(pets).reduce((total, count) => total + count, 0);
     }
 
-    function incomeMultiplier(pets = state.pets, rebirths = state.rebirths) {
+    function totalEquipped(equipped = state.equipped) {
+      return Object.values(equipped).reduce((total, count) => total + count, 0);
+    }
+
+    function incomeMultiplier(pets = state.equipped, rebirths = state.rebirths) {
       return (1 + petIncomeBonus(pets)) * (1 + rebirths * 0.1);
     }
 
-    function eggsPerSecond(owned = state.owned, pets = state.pets, rebirths = state.rebirths) {
+    function eggsPerSecond(owned = state.owned, pets = state.equipped, rebirths = state.rebirths) {
       const baseRate = upgrades.reduce((total, item) => total + (item.type === "auto" ? item.effect * (owned[item.id] || 0) : 0), 0);
       return baseRate * incomeMultiplier(pets, rebirths);
+    }
+
+    function eggCostFor(type) {
+      return petEggs[type].baseCost * Math.pow(2, state.eggPurchases[type] || 0);
     }
 
     function rebirthReward() {
@@ -358,8 +506,17 @@
       document.getElementById("click-power").textContent = `+${format(state.clickPower * incomeMultiplier())}`;
       document.getElementById("best-run").textContent = format(state.bestRun);
       document.getElementById("egg-button").style.setProperty("--egg-size", `${Math.min(340, 210 + state.clicks * 1.3)}px`);
-      document.getElementById("pet-bonus").textContent = `Pet boost: +${(petIncomeBonus() * 100).toFixed(0)}% egg income`;
-      const nextCost = Math.min(petEggCost, ...upgrades.map(costFor));
+      document.getElementById("arcade-balance").textContent = format(state.eggs);
+      document.getElementById("flappy-best").textContent = format(state.arcadeBest);
+      document.getElementById("slot-play").disabled = state.eggs < 100;
+      document.getElementById("wheel-play").disabled = state.eggs < 250;
+      document.getElementById("scratch-play").disabled = state.eggs < 500;
+      const soundButton = document.getElementById("sound-button");
+      soundButton.setAttribute("aria-checked", String(state.sound));
+      soundButton.textContent = state.sound ? "On" : "Off";
+      renderEggShop();
+      renderZoo();
+      const nextCost = Math.min(eggCostFor("normal"), ...upgrades.map(costFor));
       document.getElementById("meter-fill").style.width = `${Math.min(100, state.eggs / nextCost * 100)}%`;
       document.getElementById("buy-one").setAttribute("aria-pressed", String(state.buyMode === "one"));
       document.getElementById("buy-max").setAttribute("aria-pressed", String(state.buyMode === "max"));
@@ -375,34 +532,6 @@
         button.addEventListener("click", () => buy(item));
         return button;
       }));
-      document.getElementById("pet-egg-button").disabled = state.eggs < petEggCost;
-      const petCounts = Object.values(state.pets).reduce((total, count) => total + count, 0);
-      document.getElementById("pet-count").textContent = `${petCounts} ${petCounts === 1 ? "pet" : "pets"}`;
-      const collection = document.getElementById("pet-collection");
-      const ownedPets = Object.entries(state.pets).filter(([, count]) => count > 0);
-      if (ownedPets.length === 0) {
-        const empty = document.createElement("p");
-        empty.className = "pet-empty";
-        empty.textContent = "Your pet collection is waiting to hatch.";
-        collection.replaceChildren(empty);
-      } else {
-        collection.replaceChildren(...ownedPets.map(([id, count]) => {
-          const pet = petById[id];
-          const row = document.createElement("div");
-          row.className = `pet-row ${pet.className}`;
-          const copy = document.createElement("span");
-          copy.className = "pet-row-copy";
-          const name = document.createElement("strong");
-          name.textContent = `${pet.icon} ${pet.name} · ${pet.rarity}`;
-          const perk = document.createElement("small");
-          perk.textContent = `+${(pet.bonus * 100).toFixed(0)}% egg income`;
-          const quantity = document.createElement("small");
-          quantity.textContent = `×${count}`;
-          copy.append(name, perk);
-          row.append(copy, quantity);
-          return row;
-        }));
-      }
       const unlockedCount = achievements.filter(item => state.achievements[item.id]).length;
       document.getElementById("achievement-list").replaceChildren(...achievements.map(item => {
         const unlocked = state.achievements[item.id];
@@ -435,6 +564,70 @@
       const rebirthButton = document.getElementById("rebirth-button");
       rebirthButton.disabled = starsToGain < 1;
       rebirthButton.textContent = starsToGain ? `Rebirth for +${format(starsToGain)} ${starsToGain === 1 ? "star" : "stars"}` : "Rebirth";
+    }
+
+    function renderEggShop() {
+      const list = document.getElementById("egg-shop-list");
+      list.replaceChildren(...Object.entries(petEggs).map(([type, egg]) => {
+        const cost = eggCostFor(type);
+        const button = document.createElement("button");
+        button.className = `egg-shop-button ${type}-egg`;
+        button.type = "button";
+        button.disabled = state.eggs < cost;
+        button.setAttribute("aria-label", `Buy ${egg.name} for ${format(cost)} eggs`);
+        button.innerHTML = `<span class="egg-shop-icon" aria-hidden="true">${egg.icon}</span><span><span class="egg-shop-name">${egg.name}</span><span class="egg-shop-chance">${egg.chances}<br>Purchased: ${state.eggPurchases[type] || 0}</span></span><span class="egg-shop-price">${format(cost)}<br>eggs</span>`;
+        button.addEventListener("click", () => hatchPet(type));
+        return button;
+      }));
+    }
+
+    function renderZoo() {
+      const ownedCount = totalPets(state.pets);
+      const equippedCount = totalEquipped();
+      document.getElementById("pet-count").textContent = `${ownedCount} ${ownedCount === 1 ? "pet" : "pets"}`;
+      document.getElementById("equipped-count").textContent = `${equippedCount} / 5 equipped`;
+      document.getElementById("pet-bonus").textContent = `Equipped bonus: +${(petIncomeBonus() * 100).toFixed(0)}% egg income`;
+      const zoo = document.getElementById("pet-collection");
+      const ownedPets = petIds.filter(id => state.pets[id] > 0);
+      if (ownedPets.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "pet-empty";
+        empty.textContent = "Your zoo is empty. Hatch an egg to meet your first pet.";
+        zoo.replaceChildren(empty);
+        return;
+      }
+      zoo.replaceChildren(...ownedPets.map(id => {
+        const pet = petById[id];
+        const row = document.createElement("div");
+        row.className = `zoo-row pet-row ${pet.className}`;
+        const info = document.createElement("span");
+        info.className = "zoo-pet-info";
+        const name = document.createElement("span");
+        name.className = "zoo-pet-name";
+        name.textContent = `${pet.icon} ${pet.name} · ${pet.rarity}`;
+        const perk = document.createElement("span");
+        perk.className = "zoo-pet-perk";
+        perk.textContent = `+${(pet.bonus * 100).toFixed(0)}% egg income while equipped`;
+        info.append(name, perk);
+        const equipped = state.equipped[id] || 0;
+        const quantity = document.createElement("span");
+        quantity.className = "zoo-quantity";
+        quantity.textContent = `Owned ${state.pets[id]} · Equipped ${equipped}`;
+        const button = document.createElement("button");
+        button.className = "equip-button";
+        button.type = "button";
+        button.textContent = equipped ? "Unequip 1" : "Equip 1";
+        button.disabled = !equipped && equippedCount >= 5;
+        button.setAttribute("aria-label", `${equipped ? "Unequip" : "Equip"} one ${pet.name}`);
+        button.addEventListener("click", () => {
+          if (state.equipped[id] > 0) state.equipped[id]--;
+          else if (totalEquipped() < 5) state.equipped[id] = (state.equipped[id] || 0) + 1;
+          render();
+          save();
+        });
+        row.append(info, quantity, button);
+        return row;
+      }));
     }
 
     function showToast(message) {
@@ -521,38 +714,245 @@
       showToast(`Fresh run! +${format(stars)} rebirth star${stars === 1 ? "" : "s"}, +${format(stars * 10)}% permanent egg income.`);
     }
 
-    function hatchPet() {
-      if (state.eggs < petEggCost) return;
-      state.eggs -= petEggCost;
-      const roll = Math.floor(Math.random() * 5000);
-      const tier = roll === 0 ? petTiers[3] : roll < 250 ? petTiers[2] : roll < 1250 ? petTiers[1] : petTiers[0];
+    function hatchPet(eggType) {
+      const cost = eggCostFor(eggType);
+      if (state.eggs < cost) return;
+      state.eggs -= cost;
+      state.eggPurchases[eggType] = (state.eggPurchases[eggType] || 0) + 1;
+      const roll = Math.random();
+      let tier;
+      if (eggType === "god") {
+        tier = roll < 0.01 ? petTiers[4] : roll < 0.20 ? petTiers[3] : roll < 0.70 ? petTiers[2] : petTiers[1];
+      } else {
+        tier = roll < 0.0002 ? petTiers[3] : roll < 0.05 ? petTiers[2] : roll < 0.25 ? petTiers[1] : petTiers[0];
+      }
       const pet = tier.pets[Math.floor(Math.random() * tier.pets.length)];
       state.pets[pet.id] = (state.pets[pet.id] || 0) + 1;
-      showToast(`${pet.icon} ${pet.name} hatched! ${tier.rarity} pet.`);
+      const autoEquipped = totalEquipped() < 5;
+      if (autoEquipped) state.equipped[pet.id] = (state.equipped[pet.id] || 0) + 1;
+      showToast(`${pet.icon} ${pet.name} hatched! ${tier.rarity} pet${autoEquipped ? " · equipped" : " · equip it in your zoo"}.`);
       render();
       save();
     }
 
+    function awardEggs(amount) {
+      state.eggs += amount;
+      state.lifetime += amount;
+      state.runEggs += amount;
+      state.bestRun = Math.max(state.bestRun, state.runEggs);
+      render();
+    }
+
+    function payArcadeCost(cost) {
+      if (state.eggs < cost) return false;
+      state.eggs -= cost;
+      return true;
+    }
+
+    function playSlots() {
+      if (!payArcadeCost(100)) return;
+      const symbols = ["🥚", "⭐", "🐣", "🍀", "🌈"];
+      const result = Array.from({ length: 3 }, () => symbols[Math.floor(Math.random() * symbols.length)]);
+      document.getElementById("slot-reels").replaceChildren(...result.map(symbol => {
+        const reel = document.createElement("span");
+        reel.textContent = symbol;
+        return reel;
+      }));
+      const prize = result.every(symbol => symbol === result[0]) ? 1000 : new Set(result).size === 2 ? 100 : 0;
+      if (prize) awardEggs(prize);
+      document.getElementById("slot-result").textContent = prize ? `Winner! You got ${format(prize)} eggs.` : "No match this time. Try again!";
+      render();
+      save();
+    }
+
+    function spinWheel() {
+      if (!payArcadeCost(250)) return;
+      const prizes = [0, 100, 250, 500, 1000, 5000];
+      const prize = prizes[Math.floor(Math.random() * prizes.length)];
+      const wheel = document.getElementById("wheel-display");
+      wheel.classList.remove("turning");
+      void wheel.offsetWidth;
+      wheel.classList.add("turning");
+      if (prize) awardEggs(prize);
+      document.getElementById("wheel-result").textContent = prize ? `The wheel landed on ${format(prize)} eggs!` : "The wheel landed on zero. Give it another spin?";
+      render();
+      save();
+    }
+
+    function scratchCard() {
+      if (!payArcadeCost(500)) return;
+      const symbols = ["🥚", "⭐", "🐣", "🍀", "🌈"];
+      const result = Array.from({ length: 3 }, () => symbols[Math.floor(Math.random() * symbols.length)]);
+      document.getElementById("scratch-slots").replaceChildren(...result.map(symbol => {
+        const cell = document.createElement("span");
+        cell.textContent = symbol;
+        return cell;
+      }));
+      const prize = result.every(symbol => symbol === result[0]) ? 10000 : new Set(result).size === 2 ? 1000 : 0;
+      if (prize) awardEggs(prize);
+      document.getElementById("scratch-result").textContent = prize ? `Scratch win! You got ${format(prize)} eggs.` : "No match on this card. Better luck next time!";
+      render();
+      save();
+    }
+
+    const flappyCanvas = document.getElementById("flappy-canvas");
+    const flappyGame = { running: false, lastFrame: 0, birdY: 220, velocity: 0, pipes: [], score: 0 };
+
+    function drawFlappy() {
+      const context = flappyCanvas.getContext("2d");
+      if (!context) return;
+      const { width, height } = flappyCanvas;
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = "#c9eff5";
+      context.fillRect(0, 0, width, height);
+      context.fillStyle = "#ffffff99";
+      context.beginPath(); context.arc(76, 80, 24, 0, Math.PI * 2); context.arc(98, 80, 31, 0, Math.PI * 2); context.arc(124, 84, 22, 0, Math.PI * 2); context.fill();
+      for (const pipe of flappyGame.pipes) {
+        const gapTop = pipe.gapY - 72;
+        const gapBottom = pipe.gapY + 72;
+        context.fillStyle = "#4baf70";
+        context.fillRect(pipe.x, 0, 54, gapTop);
+        context.fillRect(pipe.x, gapBottom, 54, height - gapBottom - 22);
+        context.fillStyle = "#328d57";
+        context.fillRect(pipe.x - 4, gapTop - 14, 62, 14);
+        context.fillRect(pipe.x - 4, gapBottom, 62, 14);
+      }
+      context.fillStyle = "#f2bf4f";
+      context.beginPath(); context.ellipse(76, flappyGame.birdY, 15, 12, 0, 0, Math.PI * 2); context.fill();
+      context.fillStyle = "#30221d";
+      context.beginPath(); context.arc(81, flappyGame.birdY - 4, 2.5, 0, Math.PI * 2); context.fill();
+      context.fillStyle = "#ed8557";
+      context.beginPath(); context.moveTo(89, flappyGame.birdY); context.lineTo(99, flappyGame.birdY + 3); context.lineTo(89, flappyGame.birdY + 6); context.fill();
+      context.fillStyle = "#d8b36b";
+      context.fillRect(0, height - 22, width, 22);
+      context.fillStyle = "#30221d";
+      context.font = "bold 22px Trebuchet MS";
+      context.textAlign = "center";
+      context.fillText(String(flappyGame.score), width / 2, 36);
+    }
+
+    function flap() {
+      flappyGame.velocity = -330;
+    }
+
+    function startFlappy() {
+      flappyGame.running = true;
+      flappyGame.lastFrame = 0;
+      flappyGame.birdY = 220;
+      flappyGame.velocity = 0;
+      flappyGame.score = 0;
+      flappyGame.pipes = [{ x: 250, gapY: 230, passed: false }];
+      document.getElementById("flappy-score").textContent = "0";
+      document.getElementById("flappy-start").textContent = "Restart flight";
+      document.getElementById("flappy-result").textContent = "Go! Tap or press Space to flap.";
+      drawFlappy();
+      requestAnimationFrame(flappyFrame);
+    }
+
+    function flappyFrame(timestamp) {
+      if (!flappyGame.running) return;
+      const delta = Math.min(0.034, (timestamp - (flappyGame.lastFrame || timestamp)) / 1000);
+      flappyGame.lastFrame = timestamp;
+      flappyGame.velocity += 950 * delta;
+      flappyGame.birdY += flappyGame.velocity * delta;
+      for (const pipe of flappyGame.pipes) pipe.x -= 115 * delta;
+      flappyGame.pipes = flappyGame.pipes.filter(pipe => pipe.x > -70);
+      const lastPipe = flappyGame.pipes.at(-1);
+      if (!lastPipe || lastPipe.x < 185) flappyGame.pipes.push({ x: lastPipe ? lastPipe.x + 185 : 360, gapY: 120 + Math.random() * 210, passed: false });
+      for (const pipe of flappyGame.pipes) {
+        if (!pipe.passed && pipe.x + 54 < 76) {
+          pipe.passed = true;
+          flappyGame.score++;
+          state.arcadeBest = Math.max(state.arcadeBest, flappyGame.score);
+          document.getElementById("flappy-score").textContent = String(flappyGame.score);
+          awardEggs(25);
+          save();
+        }
+        const overlapsBird = pipe.x < 91 && pipe.x + 54 > 61;
+        if (overlapsBird && (flappyGame.birdY - 10 < pipe.gapY - 72 || flappyGame.birdY + 10 > pipe.gapY + 72)) flappyGame.running = false;
+      }
+      if (flappyGame.birdY < 10 || flappyGame.birdY > flappyCanvas.height - 32) flappyGame.running = false;
+      drawFlappy();
+      if (flappyGame.running) requestAnimationFrame(flappyFrame);
+      else {
+        state.arcadeBest = Math.max(state.arcadeBest, flappyGame.score);
+        document.getElementById("flappy-best").textContent = format(state.arcadeBest);
+        document.getElementById("flappy-result").textContent = `Flight over · ${flappyGame.score} pipes · +${format(flappyGame.score * 25)} eggs`;
+        save();
+      }
+    }
+
+    function setMainTab(tabId) {
+      for (const id of ["clicker", "arcade", "pets", "rebirth", "settings"]) {
+        const active = id === tabId;
+        document.getElementById(`${id}-tab`).hidden = !active;
+        document.getElementById(`tab-${id}`).setAttribute("aria-selected", String(active));
+      }
+      state.activeTab = tabId;
+      if (tabId !== "arcade" && flappyGame.running) {
+        flappyGame.running = false;
+        document.getElementById("flappy-result").textContent = "Flight paused. Return to Flappy Bird and restart to play again.";
+        save();
+      }
+      if (tabId === "arcade" && state.arcadeGame === "flappy") drawFlappy();
+      save();
+    }
+
+    function setArcadeGame(gameId) {
+      if (flappyGame.running && gameId !== "flappy") flappyGame.running = false;
+      for (const id of ["slots", "wheel", "scratch", "flappy"]) {
+        const active = id === gameId;
+        document.getElementById(`game-${id}`).hidden = !active;
+        document.getElementById(`arcade-tab-${id}`).setAttribute("aria-selected", String(active));
+      }
+      state.arcadeGame = gameId;
+      if (gameId === "flappy") drawFlappy();
+      save();
+    }
+
     document.getElementById("egg-button").addEventListener("click", bake);
-    document.getElementById("pet-egg-button").addEventListener("click", hatchPet);
+    for (const tabId of ["clicker", "arcade", "pets", "rebirth", "settings"]) {
+      document.getElementById(`tab-${tabId}`).addEventListener("click", () => setMainTab(tabId));
+    }
+    for (const gameId of ["slots", "wheel", "scratch", "flappy"]) {
+      document.getElementById(`arcade-tab-${gameId}`).addEventListener("click", () => setArcadeGame(gameId));
+    }
+    document.getElementById("slot-play").addEventListener("click", playSlots);
+    document.getElementById("wheel-play").addEventListener("click", spinWheel);
+    document.getElementById("scratch-play").addEventListener("click", scratchCard);
+    document.getElementById("flappy-start").addEventListener("click", startFlappy);
+    flappyCanvas.addEventListener("pointerdown", () => {
+      if (!flappyGame.running) startFlappy();
+      flap();
+    });
+    document.addEventListener("keydown", event => {
+      if (event.code !== "Space" || state.activeTab !== "arcade" || state.arcadeGame !== "flappy") return;
+      event.preventDefault();
+      if (!flappyGame.running) startFlappy();
+      flap();
+    });
     document.getElementById("buy-one").addEventListener("click", () => { state.buyMode = "one"; render(); save(); });
     document.getElementById("buy-max").addEventListener("click", () => { state.buyMode = "max"; render(); save(); });
     document.getElementById("rebirth-button").addEventListener("click", rebirth);
     document.getElementById("sound-button").addEventListener("click", event => {
       state.sound = !state.sound;
-      event.currentTarget.textContent = state.sound ? "♪" : "♫̸";
-      event.currentTarget.setAttribute("aria-label", state.sound ? "Mute sound" : "Enable sound");
+      event.currentTarget.setAttribute("aria-checked", String(state.sound));
+      event.currentTarget.textContent = state.sound ? "On" : "Off";
       save();
     });
     document.getElementById("reset-button").addEventListener("click", () => {
-      if (!window.confirm("Start a fresh game? Your eggs, upgrades, and pets will be cleared.")) return;
-      state = { ...defaults, owned: {} };
+      if (!window.confirm("Reset all progress? This clears eggs, pets, achievements, and rebirths.")) return;
+      state = createFreshState();
       save();
       render();
-      showToast("Fresh start! Let's collect eggs.");
+      setMainTab("clicker");
+      setArcadeGame("slots");
+      showToast("All progress reset.");
     });
     window.addEventListener("beforeunload", save);
     render();
+    setMainTab(state.activeTab);
+    setArcadeGame(state.arcadeGame);
     setInterval(() => {
       const production = eggsPerSecond();
       if (!production) return;

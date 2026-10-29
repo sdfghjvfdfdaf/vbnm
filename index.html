@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff3d6">
-  <title>Chris Kumar's Cookie Club</title>
+  <title>Chris Kumar's Egg Clicker</title>
   <style>
     :root {
       color-scheme: light;
@@ -60,11 +60,11 @@
     .eyebrow { z-index: 1; margin: 0 0 7px; color: #966345; font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
     h1 { z-index: 1; margin: 0; text-align: center; font: 700 clamp(28px, 4vw, 42px)/1.08 Georgia, serif; letter-spacing: 0; }
     .subtitle { z-index: 1; margin: 9px 0 18px; color: var(--muted); font-size: 14px; text-align: center; }
-    .cookie-button { position: relative; z-index: 1; display: grid; width: min(260px, 62vw); aspect-ratio: 1; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-    .cookie { position: relative; display: block; width: 88%; height: 88%; border: 5px solid #6e371f; border-radius: 47% 53% 48% 52% / 52% 47% 53% 48%; background: radial-gradient(ellipse at 32% 26%, #e9a25c 0 8%, transparent 9%), radial-gradient(ellipse at 70% 66%, #bd652e 0 7%, transparent 8%), radial-gradient(ellipse at 67% 30%, #c56c36 0 6%, transparent 7%), radial-gradient(ellipse at 35% 68%, #a9542e 0 7%, transparent 8%), radial-gradient(ellipse at 48% 47%, #f6c477 0 12%, transparent 13%), #d98743; box-shadow: inset -10px -12px 0 #c47539, inset 7px 8px 0 #f2b66e, 0 13px 0 #753d25, 0 20px 24px #a95d3933; transition: transform .08s ease, filter .15s ease; }
-    .cookie-button:hover .cookie { filter: brightness(1.05); transform: translateY(-3px) rotate(-2deg); }
-    .cookie-button:active .cookie, .cookie-button.bop .cookie { transform: scale(.93) rotate(3deg); }
-    .cookie-face { position: absolute; top: 41%; left: 50%; width: 42%; transform: translateX(-50%); }
+    .egg-button { position: relative; z-index: 1; display: grid; width: min(var(--egg-size, 210px), 78vw); aspect-ratio: 1; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; transition: width .22s ease; -webkit-tap-highlight-color: transparent; }
+    .egg { position: relative; display: block; width: 88%; height: 96%; border: 4px solid #b98a4f; border-radius: 50% 50% 45% 45% / 59% 59% 41% 41%; background: radial-gradient(ellipse at 34% 24%, #fffef0 0 8%, transparent 9%), linear-gradient(135deg, #fffef2 10%, #f8e6ad 63%, #e8c77d 100%); box-shadow: inset -10px -12px 0 #e7ce94, inset 7px 8px 0 #fffef8, 0 13px 0 #b18a51, 0 20px 24px #9b723533; transition: transform .08s ease, filter .15s ease; }
+    .egg-button:hover .egg { filter: brightness(1.04); transform: translateY(-3px) rotate(-2deg); }
+    .egg-button:active .egg, .egg-button.bop .egg { transform: scale(.94) rotate(3deg); }
+    .egg-face { position: absolute; top: 43%; left: 50%; width: 42%; transform: translateX(-50%); }
     .eyes { display: flex; justify-content: space-around; }
     .eye { width: 9px; height: 13px; border-radius: 50%; background: #39221c; }
     .smile { width: 18px; height: 9px; margin: 5px auto 0; border-bottom: 3px solid #71351f; border-radius: 0 0 15px 15px; }
@@ -88,6 +88,21 @@
     .upgrade-desc { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
     .upgrade-cost { min-width: 55px; color: #a64e3d; font-size: 12px; font-weight: 900; text-align: right; }
     .owned { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 700; }
+    .pet-shop { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .pet-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .pet-heading h3 { margin: 0; font: 700 19px Georgia, serif; }
+    .pet-heading span { color: var(--muted); font-size: 11px; font-weight: 800; }
+    .pet-chances { margin: 8px 0 10px; color: var(--muted); font-size: 10px; line-height: 1.6; }
+    .pet-buy { min-height: 62px; }
+    .pet-buy .upgrade-icon { background: #fff0bf; }
+    .pet-collection { display: grid; gap: 5px; margin-top: 12px; }
+    .pet-empty { margin: 0; color: var(--muted); font-size: 11px; }
+    .pet-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--ink); font-size: 11px; }
+    .pet-row small { color: var(--muted); }
+    .pet-row.common strong { color: #64816d; }
+    .pet-row.rare strong { color: #3a85a0; }
+    .pet-row.super-rare strong { color: #8d5bbc; }
+    .pet-row.mythic strong { color: #c17a19; }
     .bottom-note { display: flex; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 15px; color: var(--muted); font-size: 11px; }
     .bottom-note strong { color: var(--ink); }
     .toast { position: fixed; right: 20px; bottom: 20px; z-index: 5; max-width: min(350px, calc(100vw - 40px)); padding: 12px 16px; border: 2px solid var(--ink); border-radius: 12px; background: var(--gold); box-shadow: 0 4px 0 var(--ink); font-size: 13px; font-weight: 800; animation: toast-in .25s ease-out; }
@@ -117,8 +132,8 @@
   <main class="game">
     <header class="topbar">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true">🍪</div>
-        <div><div class="brand-name">Kumar's Cookie Club</div><div class="brand-note">Fresh from Chris's kitchen</div></div>
+        <div class="brand-mark" aria-hidden="true">🥚</div>
+        <div><div class="brand-name">Kumar's Egg Club</div><div class="brand-note">Fresh from Chris's coop</div></div>
       </div>
       <div class="top-actions">
         <button class="icon-button" id="sound-button" type="button" aria-label="Toggle sound" title="Toggle sound">♪</button>
@@ -126,26 +141,36 @@
       </div>
     </header>
 
-    <section class="scorebar" aria-label="Cookie score">
-      <div><div class="score-label">Cookie stash</div><div class="score-number" id="cookies">0</div></div>
-      <div class="score-center"><div class="rate" id="rate">+0 cookies / second</div><div class="meter"><div class="meter-fill" id="meter-fill"></div></div></div>
-      <div class="score-right"><div class="score-label">Baked all-time</div><div class="score-number" id="lifetime">0</div></div>
+    <section class="scorebar" aria-label="Egg score">
+      <div><div class="score-label">Egg stash</div><div class="score-number" id="eggs">0</div></div>
+      <div class="score-center"><div class="rate" id="rate">+0 eggs / second</div><div class="meter"><div class="meter-fill" id="meter-fill"></div></div></div>
+      <div class="score-right"><div class="score-label">Collected all-time</div><div class="score-number" id="lifetime">0</div></div>
     </section>
 
     <div class="layout">
       <section class="bakery" aria-label="Cookie bakery">
         <p class="eyebrow">The one and only</p>
-        <h1>Chris Kumar's<br>Cookie Clicker</h1>
-        <p class="subtitle">One tap. One cookie. A very good day.</p>
-        <button class="cookie-button" id="cookie-button" type="button" aria-label="Bake a cookie">
-          <span class="cookie" aria-hidden="true"><span class="cookie-face"><span class="eyes"><i class="eye"></i><i class="eye"></i></span><i class="smile"></i></span></span>
+        <h1>Chris Kumar's<br>Egg Clicker</h1>
+        <p class="subtitle">Tap the egg. Watch it grow. Hatch a pet.</p>
+        <button class="egg-button" id="egg-button" type="button" aria-label="Collect an egg">
+          <span class="egg" aria-hidden="true"><span class="egg-face"><span class="eyes"><i class="eye"></i><i class="eye"></i></span><i class="smile"></i></span></span>
         </button>
-        <p class="tap-hint">TAP THE COOKIE TO BAKE</p>
+        <p class="tap-hint">TAP THE EGG TO COLLECT</p>
       </section>
 
-      <aside class="shop" aria-label="Bakery upgrades">
-        <div class="shop-heading"><h2>Cookie shop</h2><span>Make more</span></div>
+      <aside class="shop" aria-label="Egg shop and pets">
+        <div class="shop-heading"><h2>Egg upgrades</h2><span>Collect more</span></div>
         <div class="upgrade-list" id="upgrade-list"></div>
+        <section class="pet-shop" aria-label="Pet egg shop">
+          <div class="pet-heading"><h3>Pet eggs</h3><span id="pet-count">0 pets</span></div>
+          <p class="pet-chances">Common 75% · Rare 20% · Super Rare 4.98% · Mythic 0.02% (1 in 5,000)</p>
+          <button class="upgrade pet-buy" id="pet-egg-button" type="button" aria-label="Buy and hatch a pet egg for 100 eggs">
+            <span class="upgrade-icon" aria-hidden="true">🥚</span>
+            <span><span class="upgrade-name">Buy pet egg</span><span class="upgrade-desc">Hatch one surprise pet</span></span>
+            <span class="upgrade-cost">100 eggs</span>
+          </button>
+          <div class="pet-collection" id="pet-collection" aria-live="polite"></div>
+        </section>
         <div class="bottom-note"><span>Click power <strong id="click-power">+1</strong></span><span>Best run <strong id="best-run">0</strong></span></div>
       </aside>
     </div>
@@ -155,12 +180,20 @@
 
   <script>
     const upgrades = [
-      { id: "spatula", name: "Super spatula", description: "+1 cookie per click", icon: "🥄", baseCost: 15, effect: 1, type: "click" },
-      { id: "chris", name: "Chris's recipe", description: "+1 cookie per second", icon: "📖", baseCost: 50, effect: 1, type: "auto" },
-      { id: "oven", name: "Cookie oven", description: "+6 cookies per second", icon: "🧁", baseCost: 180, effect: 6, type: "auto" },
-      { id: "bakery", name: "Kumar bakery", description: "+25 cookies per second", icon: "🏠", baseCost: 700, effect: 25, type: "auto" }
+      { id: "spatula", name: "Golden scoop", description: "+1 egg per click", icon: "🥄", baseCost: 15, effect: 1, type: "click" },
+      { id: "chris", name: "Chris's nesting box", description: "+1 egg per second", icon: "📖", baseCost: 50, effect: 1, type: "auto" },
+      { id: "oven", name: "Cozy coop", description: "+6 eggs per second", icon: "🐔", baseCost: 180, effect: 6, type: "auto" },
+      { id: "bakery", name: "Kumar egg farm", description: "+25 eggs per second", icon: "🏠", baseCost: 700, effect: 25, type: "auto" }
     ];
-    const defaults = { cookies: 0, lifetime: 0, bestRun: 0, clickPower: 1, owned: {}, sound: true, lastSaved: Date.now() };
+    const petEggCost = 100;
+    const petTiers = [
+      { rarity: "Common", className: "common", pets: [{ id: "sprout", name: "Sprout", icon: "🐣" }, { id: "crumb", name: "Crumb", icon: "🐤" }, { id: "moss", name: "Moss", icon: "🐥" }] },
+      { rarity: "Rare", className: "rare", pets: [{ id: "puddle", name: "Puddle", icon: "🦆" }, { id: "pippin", name: "Pippin", icon: "🐰" }, { id: "shellby", name: "Shellby", icon: "🐢" }] },
+      { rarity: "Super Rare", className: "super-rare", pets: [{ id: "ember", name: "Ember", icon: "🦊" }, { id: "comet", name: "Comet", icon: "🐲" }, { id: "moonbeam", name: "Moonbeam", icon: "🦄" }] },
+      { rarity: "Mythic", className: "mythic", pets: [{ id: "starflame", name: "Starflame", icon: "🐉" }] }
+    ];
+    const petById = Object.fromEntries(petTiers.flatMap(tier => tier.pets.map(pet => [pet.id, { ...pet, rarity: tier.rarity, className: tier.className }])));
+    const defaults = { eggs: 0, lifetime: 0, bestRun: 0, clickPower: 1, clicks: 0, owned: {}, pets: {}, sound: true, lastSaved: Date.now() };
     let state = loadState();
     let toastTimer;
     let audioContext;
@@ -170,20 +203,24 @@
         const saved = JSON.parse(localStorage.getItem("kumar-cookie-club"));
         if (!saved || typeof saved !== "object") return { ...defaults, owned: {} };
         const owned = Object.fromEntries(upgrades.map(item => [item.id, Math.max(0, Number(saved.owned?.[item.id]) || 0)]));
+        const pets = Object.fromEntries(Object.keys(petById).map(id => [id, Math.max(0, Number(saved.pets?.[id]) || 0)]));
         const result = {
           ...defaults,
-          ...saved,
-          cookies: Math.max(0, Number(saved.cookies) || 0),
+          eggs: Math.max(0, Number(saved.eggs ?? saved.cookies) || 0),
           lifetime: Math.max(0, Number(saved.lifetime) || 0),
           bestRun: Math.max(0, Number(saved.bestRun) || 0),
           clickPower: Math.max(1, Number(saved.clickPower) || 1),
-          owned
+          clicks: Math.max(0, Number(saved.clicks) || 0),
+          owned,
+          pets,
+          sound: saved.sound !== false,
+          lastSaved: Number(saved.lastSaved) || Date.now()
         };
         const elapsed = Math.min(8 * 60 * 60, Math.max(0, (Date.now() - Number(saved.lastSaved || Date.now())) / 1000));
-        const offlineCookies = Math.floor(cookiesPerSecond(owned) * elapsed);
-        result.cookies += offlineCookies;
-        result.lifetime += offlineCookies;
-        if (offlineCookies > 0) setTimeout(() => showToast(`Welcome back! Your bakery made ${format(offlineCookies)} cookies.`), 300);
+        const offlineEggs = Math.floor(eggsPerSecond(owned) * elapsed);
+        result.eggs += offlineEggs;
+        result.lifetime += offlineEggs;
+        if (offlineEggs > 0) setTimeout(() => showToast(`Welcome back! Your coop made ${format(offlineEggs)} eggs.`), 300);
         return result;
       } catch {
         return { ...defaults, owned: {} };
@@ -199,7 +236,7 @@
       return `${amount.toFixed(amount < 10 ? 1 : 0)}${units[unit]}`;
     }
 
-    function cookiesPerSecond(owned = state.owned) {
+    function eggsPerSecond(owned = state.owned) {
       return upgrades.reduce((total, item) => total + (item.type === "auto" ? item.effect * (owned[item.id] || 0) : 0), 0);
     }
 
@@ -213,25 +250,49 @@
     }
 
     function render() {
-      document.getElementById("cookies").textContent = format(state.cookies);
+      document.getElementById("eggs").textContent = format(state.eggs);
       document.getElementById("lifetime").textContent = format(state.lifetime);
-      document.getElementById("rate").textContent = `+${format(cookiesPerSecond())} cookies / second`;
+      document.getElementById("rate").textContent = `+${format(eggsPerSecond())} eggs / second`;
       document.getElementById("click-power").textContent = `+${format(state.clickPower)}`;
       document.getElementById("best-run").textContent = format(state.bestRun);
-      const nextCost = Math.min(...upgrades.map(costFor));
-      document.getElementById("meter-fill").style.width = `${Math.min(100, state.cookies / nextCost * 100)}%`;
+      document.getElementById("egg-button").style.setProperty("--egg-size", `${Math.min(340, 210 + state.clicks * 1.3)}px`);
+      const nextCost = Math.min(petEggCost, ...upgrades.map(costFor));
+      document.getElementById("meter-fill").style.width = `${Math.min(100, state.eggs / nextCost * 100)}%`;
       const list = document.getElementById("upgrade-list");
       list.replaceChildren(...upgrades.map(item => {
         const cost = costFor(item);
         const button = document.createElement("button");
         button.className = "upgrade";
         button.type = "button";
-        button.disabled = state.cookies < cost;
-        button.setAttribute("aria-label", `Buy ${item.name} for ${format(cost)} cookies`);
+        button.disabled = state.eggs < cost;
+        button.setAttribute("aria-label", `Buy ${item.name} for ${format(cost)} eggs`);
         button.innerHTML = `<span class="upgrade-icon" aria-hidden="true">${item.icon}</span><span><span class="upgrade-name">${item.name}</span><span class="upgrade-desc">${item.description}</span></span><span class="upgrade-cost">${format(cost)}<span class="owned">Owned: ${state.owned[item.id] || 0}</span></span>`;
         button.addEventListener("click", () => buy(item));
         return button;
       }));
+      document.getElementById("pet-egg-button").disabled = state.eggs < petEggCost;
+      const petCounts = Object.values(state.pets).reduce((total, count) => total + count, 0);
+      document.getElementById("pet-count").textContent = `${petCounts} ${petCounts === 1 ? "pet" : "pets"}`;
+      const collection = document.getElementById("pet-collection");
+      const ownedPets = Object.entries(state.pets).filter(([, count]) => count > 0);
+      if (ownedPets.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "pet-empty";
+        empty.textContent = "Your pet collection is waiting to hatch.";
+        collection.replaceChildren(empty);
+      } else {
+        collection.replaceChildren(...ownedPets.map(([id, count]) => {
+          const pet = petById[id];
+          const row = document.createElement("div");
+          row.className = `pet-row ${pet.className}`;
+          const name = document.createElement("strong");
+          name.textContent = `${pet.icon} ${pet.name} · ${pet.rarity}`;
+          const quantity = document.createElement("small");
+          quantity.textContent = `×${count}`;
+          row.append(name, quantity);
+          return row;
+        }));
+      }
     }
 
     function showToast(message) {
@@ -263,10 +324,11 @@
     }
 
     function bake(event) {
-      state.cookies += state.clickPower;
+      state.eggs += state.clickPower;
       state.lifetime += state.clickPower;
+      state.clicks++;
       state.bestRun = Math.max(state.bestRun, state.lifetime);
-      const button = document.getElementById("cookie-button");
+      const button = document.getElementById("egg-button");
       button.classList.remove("bop");
       void button.offsetWidth;
       button.classList.add("bop");
@@ -284,8 +346,8 @@
 
     function buy(item) {
       const cost = costFor(item);
-      if (state.cookies < cost) return;
-      state.cookies -= cost;
+      if (state.eggs < cost) return;
+      state.eggs -= cost;
       state.owned[item.id] = (state.owned[item.id] || 0) + 1;
       if (item.type === "click") state.clickPower += item.effect;
       showToast(`${item.name} added to the bakery!`);
@@ -293,7 +355,20 @@
       save();
     }
 
-    document.getElementById("cookie-button").addEventListener("click", bake);
+    function hatchPet() {
+      if (state.eggs < petEggCost) return;
+      state.eggs -= petEggCost;
+      const roll = Math.floor(Math.random() * 5000);
+      const tier = roll === 0 ? petTiers[3] : roll < 250 ? petTiers[2] : roll < 1250 ? petTiers[1] : petTiers[0];
+      const pet = tier.pets[Math.floor(Math.random() * tier.pets.length)];
+      state.pets[pet.id] = (state.pets[pet.id] || 0) + 1;
+      showToast(`${pet.icon} ${pet.name} hatched! ${tier.rarity} pet.`);
+      render();
+      save();
+    }
+
+    document.getElementById("egg-button").addEventListener("click", bake);
+    document.getElementById("pet-egg-button").addEventListener("click", hatchPet);
     document.getElementById("sound-button").addEventListener("click", event => {
       state.sound = !state.sound;
       event.currentTarget.textContent = state.sound ? "♪" : "♫̸";
@@ -301,18 +376,18 @@
       save();
     });
     document.getElementById("reset-button").addEventListener("click", () => {
-      if (!window.confirm("Start a fresh batch? Your saved cookies and upgrades will be cleared.")) return;
+      if (!window.confirm("Start a fresh game? Your eggs, upgrades, and pets will be cleared.")) return;
       state = { ...defaults, owned: {} };
       save();
       render();
-      showToast("Fresh batch! Let's bake.");
+      showToast("Fresh start! Let's collect eggs.");
     });
     window.addEventListener("beforeunload", save);
     render();
     setInterval(() => {
-      const production = cookiesPerSecond();
+      const production = eggsPerSecond();
       if (!production) return;
-      state.cookies += production;
+      state.eggs += production;
       state.lifetime += production;
       state.bestRun = Math.max(state.bestRun, state.lifetime);
       render();

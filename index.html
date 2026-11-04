@@ -197,6 +197,16 @@
     .rebirth-button:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.04); }
     .rebirth-button:disabled { cursor: not-allowed; opacity: .5; }
     .rebirth-note { margin: 9px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .research-note { margin: 0 0 15px; color: var(--muted); font-size: 12px; }
+    .research-wallet { margin: 12px 0; color: #a64e3d; font: 700 20px Georgia, serif; }
+    .research-list { display: grid; max-width: 760px; gap: 9px; }
+    .research-item { display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 12px; min-height: 76px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+    .research-icon { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 11px; background: #d9eee2; font-size: 22px; }
+    .research-name { display: block; font-size: 13px; font-weight: 900; }
+    .research-desc, .research-level { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .research-buy { min-width: 112px; min-height: 38px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: #fffdf8; color: var(--ink); font-size: 11px; font-weight: 900; cursor: pointer; }
+    .research-buy:hover:not(:disabled) { border-color: var(--ink); }
+    .research-buy:disabled { cursor: not-allowed; opacity: .48; }
     .bottom-note { display: flex; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 15px; color: var(--muted); font-size: 11px; }
     .bottom-note strong { color: var(--ink); }
     .toast { position: fixed; right: 20px; bottom: 20px; z-index: 5; max-width: min(350px, calc(100vw - 40px)); padding: 12px 16px; border: 2px solid var(--ink); border-radius: 12px; background: var(--gold); box-shadow: 0 4px 0 var(--ink); font-size: 13px; font-weight: 800; animation: toast-in .25s ease-out; }
@@ -247,6 +257,7 @@
       <button class="main-tab" id="tab-arcade" type="button" role="tab" aria-selected="false" aria-controls="arcade-tab" data-tab-target="arcade-tab">Arcade</button>
       <button class="main-tab" id="tab-pets" type="button" role="tab" aria-selected="false" aria-controls="pets-tab" data-tab-target="pets-tab">Pets</button>
       <button class="main-tab" id="tab-rebirth" type="button" role="tab" aria-selected="false" aria-controls="rebirth-tab" data-tab-target="rebirth-tab">Rebirth</button>
+      <button class="main-tab" id="tab-research" type="button" role="tab" aria-selected="false" aria-controls="research-tab" data-tab-target="research-tab">Research</button>
       <button class="main-tab" id="tab-settings" type="button" role="tab" aria-selected="false" aria-controls="settings-tab" data-tab-target="settings-tab">Settings</button>
     </nav>
 
@@ -326,6 +337,12 @@
       </section>
       <section class="achievement-section"><div class="zone-heading"><h2>Achievements</h2><span>Milestones award bonus eggs</span></div><div class="achievement-list" id="achievement-list" aria-live="polite"></div></section>
     </section>
+    <section class="tab-panel" id="research-tab" role="tabpanel" aria-labelledby="tab-research" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Build a stronger flock</p><h1>Research</h1></div></div>
+      <p class="research-note">Rebirths earn research points. Research upgrades stay with you after every rebirth.</p>
+      <div class="research-wallet">Research points: <strong id="research-points">0</strong></div>
+      <div class="research-list" id="research-list"></div>
+    </section>
     <section class="tab-panel" id="settings-tab" role="tabpanel" aria-labelledby="tab-settings" hidden>
       <div class="section-heading"><div><p class="eyebrow">Make it yours</p><h1>Settings</h1></div></div>
       <section class="settings-list">
@@ -360,6 +377,11 @@
     const petById = Object.fromEntries(petTiers.flatMap(tier => tier.pets.map(pet => [pet.id, { ...pet, rarity: tier.rarity, className: tier.className, bonus: tier.bonus }])));
     const petIds = Object.keys(petById);
     const rebirthRequirement = 10000;
+    const research = [
+      { id: "touch", name: "Quantum touch", icon: "⚛️", description: "Click earnings +25% per level", bonus: 0.25, maxLevel: 10 },
+      { id: "engines", name: "Coop automation", icon: "⚙️", description: "Passive egg income +20% per level", bonus: 0.2, maxLevel: 10 },
+      { id: "bonds", name: "Pet resonance", icon: "💚", description: "Equipped pet bonuses +20% stronger per level", bonus: 0.2, maxLevel: 10 }
+    ];
     const achievements = [
       { id: "first-click", icon: "👆", name: "First tap", description: "Click the egg once", reward: 10, check: game => game.clicks >= 1 },
       { id: "hundred-clicks", icon: "💪", name: "Egg enthusiast", description: "Click the egg 100 times", reward: 100, check: game => game.clicks >= 100 },
@@ -369,7 +391,7 @@
       { id: "mythic-pet", icon: "🌟", name: "Mythic moment", description: "Hatch a Mythic pet", reward: 1000, check: game => game.pets.starflame > 0 },
       { id: "first-rebirth", icon: "♻️", name: "Fresh start", description: "Rebirth for the first time", reward: 1000, check: game => game.rebirths >= 1 }
     ];
-    const defaults = { eggs: 0, lifetime: 0, runEggs: 0, bestRun: 0, clickPower: 1, clicks: 0, rebirths: 0, owned: {}, pets: {}, equipped: {}, eggPurchases: { normal: 0, god: 0 }, achievements: {}, arcadeBest: 0, buyMode: "one", activeTab: "clicker", arcadeGame: "slots", sound: true, lastSaved: Date.now() };
+    const defaults = { eggs: 0, lifetime: 0, runEggs: 0, bestRun: 0, clickPower: 1, clicks: 0, rebirths: 0, researchPoints: 0, researchLevels: {}, owned: {}, pets: {}, equipped: {}, eggPurchases: { normal: 0, god: 0 }, achievements: {}, arcadeBest: 0, buyMode: "one", activeTab: "clicker", arcadeGame: "slots", sound: true, lastSaved: Date.now() };
     let state = loadState();
     let toastTimer;
     let audioContext;
@@ -380,6 +402,7 @@
         owned: Object.fromEntries(upgrades.map(item => [item.id, 0])),
         pets: Object.fromEntries(petIds.map(id => [id, 0])),
         equipped: Object.fromEntries(petIds.map(id => [id, 0])),
+        researchLevels: Object.fromEntries(research.map(item => [item.id, 0])),
         eggPurchases: { normal: 0, god: 0 },
         achievements: Object.fromEntries(achievements.map(item => [item.id, false]))
       };
@@ -410,6 +433,8 @@
           clickPower: Math.max(1, Number(saved.clickPower) || 1),
           clicks: Math.max(0, Number(saved.clicks) || 0),
           rebirths: Math.max(0, Math.floor(Number(saved.rebirths) || 0)),
+          researchPoints: Math.max(0, Math.floor(Number(saved.researchPoints) || 0)),
+          researchLevels: Object.fromEntries(research.map(item => [item.id, Math.min(item.maxLevel, Math.max(0, Math.floor(Number(saved.researchLevels?.[item.id]) || 0)))])),
           owned,
           pets,
           equipped,
@@ -417,13 +442,13 @@
           achievements: unlockedAchievements,
           arcadeBest: Math.max(0, Number(saved.arcadeBest) || 0),
           buyMode: saved.buyMode === "max" ? "max" : "one",
-          activeTab: ["clicker", "arcade", "pets", "rebirth", "settings"].includes(saved.activeTab) ? saved.activeTab : "clicker",
+          activeTab: ["clicker", "arcade", "pets", "rebirth", "research", "settings"].includes(saved.activeTab) ? saved.activeTab : "clicker",
           arcadeGame: ["slots", "wheel", "scratch", "flappy"].includes(saved.arcadeGame) ? saved.arcadeGame : "slots",
           sound: saved.sound !== false,
           lastSaved: Number(saved.lastSaved) || Date.now()
         };
         const elapsed = Math.min(8 * 60 * 60, Math.max(0, (Date.now() - Number(saved.lastSaved || Date.now())) / 1000));
-        const offlineEggs = Math.floor(eggsPerSecond(owned, equipped, result.rebirths) * elapsed);
+        const offlineEggs = Math.floor(eggsPerSecond(owned, equipped, result.rebirths, result.researchLevels) * elapsed);
         result.eggs += offlineEggs;
         result.lifetime += offlineEggs;
         result.runEggs += offlineEggs;
@@ -444,8 +469,9 @@
       return `${amount.toFixed(amount < 10 ? 1 : 0)}${units[unit]}`;
     }
 
-    function petIncomeBonus(pets = state.equipped) {
-      return Object.entries(pets).reduce((total, [id, count]) => total + (petById[id]?.bonus || 0) * count, 0);
+    function petIncomeBonus(pets = state.equipped, researchLevels = state.researchLevels) {
+      const baseBonus = Object.entries(pets).reduce((total, [id, count]) => total + (petById[id]?.bonus || 0) * count, 0);
+      return baseBonus * (1 + (researchLevels.bonds || 0) * 0.2);
     }
 
     function totalPets(pets) {
@@ -456,13 +482,21 @@
       return Object.values(equipped).reduce((total, count) => total + count, 0);
     }
 
-    function incomeMultiplier(pets = state.equipped, rebirths = state.rebirths) {
-      return (1 + petIncomeBonus(pets)) * (1 + rebirths * 0.1);
+    function incomeMultiplier(pets = state.equipped, rebirths = state.rebirths, researchLevels = state.researchLevels) {
+      return (1 + petIncomeBonus(pets, researchLevels)) * (1 + rebirths * 0.1);
     }
 
-    function eggsPerSecond(owned = state.owned, pets = state.equipped, rebirths = state.rebirths) {
+    function eggsPerSecond(owned = state.owned, pets = state.equipped, rebirths = state.rebirths, researchLevels = state.researchLevels) {
       const baseRate = upgrades.reduce((total, item) => total + (item.type === "auto" ? item.effect * (owned[item.id] || 0) : 0), 0);
-      return baseRate * incomeMultiplier(pets, rebirths);
+      return baseRate * incomeMultiplier(pets, rebirths, researchLevels) * (1 + (researchLevels.engines || 0) * 0.2);
+    }
+
+    function clickResearchMultiplier(researchLevels = state.researchLevels) {
+      return 1 + (researchLevels.touch || 0) * 0.25;
+    }
+
+    function researchCost(item) {
+      return 1 + (state.researchLevels[item.id] || 0) * 2;
     }
 
     function eggCostFor(type) {
@@ -505,7 +539,7 @@
       document.getElementById("eggs").textContent = format(state.eggs);
       document.getElementById("lifetime").textContent = format(state.lifetime);
       document.getElementById("rate").textContent = `+${format(eggsPerSecond())} eggs / second`;
-      document.getElementById("click-power").textContent = `+${format(state.clickPower * incomeMultiplier())}`;
+      document.getElementById("click-power").textContent = `+${format(state.clickPower * incomeMultiplier() * clickResearchMultiplier())}`;
       document.getElementById("best-run").textContent = format(state.bestRun);
       document.getElementById("egg-button").style.setProperty("--egg-size", `${Math.min(340, 210 + state.clicks * 1.3)}px`);
       document.getElementById("arcade-balance").textContent = format(state.eggs);
@@ -518,6 +552,7 @@
       soundButton.textContent = state.sound ? "On" : "Off";
       renderEggShop();
       renderZoo();
+      renderResearch();
       const nextCost = Math.min(eggCostFor("normal"), ...upgrades.map(costFor));
       document.getElementById("meter-fill").style.width = `${Math.min(100, state.eggs / nextCost * 100)}%`;
       document.getElementById("buy-one").setAttribute("aria-pressed", String(state.buyMode === "one"));
@@ -567,6 +602,37 @@
       const rebirthButton = document.getElementById("rebirth-button");
       rebirthButton.disabled = starsToGain < 1;
       rebirthButton.textContent = starsToGain ? `Rebirth for +${format(starsToGain)} ${starsToGain === 1 ? "star" : "stars"}` : "Rebirth";
+    }
+
+    function renderResearch() {
+      document.getElementById("research-points").textContent = format(state.researchPoints);
+      document.getElementById("research-list").replaceChildren(...research.map(item => {
+        const level = state.researchLevels[item.id] || 0;
+        const cost = researchCost(item);
+        const button = document.createElement("button");
+        button.className = "research-buy";
+        button.type = "button";
+        button.disabled = level >= item.maxLevel || state.researchPoints < cost;
+        button.textContent = level >= item.maxLevel ? "Max level" : `Research · ${cost} point${cost === 1 ? "" : "s"}`;
+        button.setAttribute("aria-label", level >= item.maxLevel ? `${item.name} max level reached` : `Upgrade ${item.name} to level ${level + 1} for ${cost} research points`);
+        button.addEventListener("click", () => buyResearch(item));
+        const entry = document.createElement("div");
+        entry.className = "research-item";
+        entry.innerHTML = `<span class="research-icon" aria-hidden="true">${item.icon}</span><span><span class="research-name">${item.name}</span><span class="research-desc">${item.description}</span><span class="research-level">Level ${level} / ${item.maxLevel} · Current boost +${Math.round(level * item.bonus * 100)}%</span></span>`;
+        entry.append(button);
+        return entry;
+      }));
+    }
+
+    function buyResearch(item) {
+      const level = state.researchLevels[item.id] || 0;
+      const cost = researchCost(item);
+      if (level >= item.maxLevel || state.researchPoints < cost) return;
+      state.researchPoints -= cost;
+      state.researchLevels[item.id] = level + 1;
+      showToast(`${item.name} upgraded to level ${level + 1}!`);
+      render();
+      save();
     }
 
     function renderEggShop() {
@@ -662,7 +728,7 @@
     }
 
     function bake(event) {
-      const earned = state.clickPower * incomeMultiplier();
+      const earned = state.clickPower * incomeMultiplier() * clickResearchMultiplier();
       state.eggs += earned;
       state.lifetime += earned;
       state.runEggs += earned;
@@ -707,6 +773,7 @@
       if (!stars || !window.confirm(`Rebirth now for ${stars} star${stars === 1 ? "" : "s"}? Your eggs and upgrades reset, but pets and achievements stay.`)) return;
       state.bestRun = Math.max(state.bestRun, state.runEggs);
       state.rebirths += stars;
+      state.researchPoints += stars;
       state.eggs = 0;
       state.runEggs = 0;
       state.clicks = 0;
@@ -714,7 +781,7 @@
       state.owned = Object.fromEntries(upgrades.map(item => [item.id, 0]));
       render();
       save();
-      showToast(`Fresh run! +${format(stars)} rebirth star${stars === 1 ? "" : "s"}, +${format(stars * 10)}% permanent egg income.`);
+      showToast(`Fresh run! +${format(stars)} rebirth star${stars === 1 ? "" : "s"} and research point${stars === 1 ? "" : "s"}.`);
     }
 
     function hatchPet(eggType) {
@@ -886,7 +953,7 @@
     }
 
     function setMainTab(tabId) {
-      for (const id of ["clicker", "arcade", "pets", "rebirth", "settings"]) {
+      for (const id of ["clicker", "arcade", "pets", "rebirth", "research", "settings"]) {
         const active = id === tabId;
         document.getElementById(`${id}-tab`).hidden = !active;
         document.getElementById(`tab-${id}`).setAttribute("aria-selected", String(active));
@@ -914,7 +981,7 @@
     }
 
     document.getElementById("egg-button").addEventListener("click", bake);
-    for (const tabId of ["clicker", "arcade", "pets", "rebirth", "settings"]) {
+    for (const tabId of ["clicker", "arcade", "pets", "rebirth", "research", "settings"]) {
       document.getElementById(`tab-${tabId}`).addEventListener("click", () => setMainTab(tabId));
     }
     for (const gameId of ["slots", "wheel", "scratch", "flappy"]) {

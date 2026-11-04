@@ -200,13 +200,14 @@
     .research-note { margin: 0 0 15px; color: var(--muted); font-size: 12px; }
     .research-wallet { margin: 12px 0; color: #a64e3d; font: 700 20px Georgia, serif; }
     .research-list { display: grid; max-width: 760px; gap: 9px; }
-    .research-item { display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 12px; min-height: 76px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+    .research-item { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 76px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
     .research-icon { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 11px; background: #d9eee2; font-size: 22px; }
     .research-name { display: block; font-size: 13px; font-weight: 900; }
     .research-desc, .research-level { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
     .research-buy { min-width: 112px; min-height: 38px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: #fffdf8; color: var(--ink); font-size: 11px; font-weight: 900; cursor: pointer; }
     .research-buy:hover:not(:disabled) { border-color: var(--ink); }
     .research-buy:disabled { cursor: not-allowed; opacity: .48; }
+    .research-actions { display: grid; gap: 5px; }
     .stock-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 4px 0 18px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .stock-stat-label { display: block; color: var(--muted); font-size: 10px; font-weight: 900; text-transform: uppercase; }
     .stock-stat-value { display: block; margin-top: 4px; font: 700 20px Georgia, serif; }
@@ -253,6 +254,8 @@
       .pet-zone { grid-template-columns: 1fr; gap: 22px; }
       .pet-zone-section + .pet-zone-section { padding: 20px 0 0; border-top: 1px solid var(--line); border-left: 0; }
       .achievement-list { grid-template-columns: 1fr; }
+      .research-item { grid-template-columns: 42px minmax(0, 1fr); }
+      .research-actions { grid-column: 2; display: flex; flex-wrap: wrap; }
     }
     @media (max-width: 390px) {
       .brand-name { font-size: 15px; }
@@ -720,21 +723,37 @@
         button.textContent = `Research · ${cost} point${cost === 1 ? "" : "s"}`;
         button.setAttribute("aria-label", `Upgrade ${item.name} to level ${level + 1} for ${cost} research points`);
         button.addEventListener("click", () => buyResearch(item));
+        const maxButton = document.createElement("button");
+        maxButton.className = "research-buy";
+        maxButton.type = "button";
+        maxButton.disabled = state.researchPoints < cost;
+        maxButton.textContent = "Buy Max";
+        maxButton.setAttribute("aria-label", `Buy as many ${item.name} research levels as possible`);
+        maxButton.addEventListener("click", () => buyResearch(item, true));
+        const actions = document.createElement("span");
+        actions.className = "research-actions";
+        actions.append(button, maxButton);
         const entry = document.createElement("div");
         entry.className = "research-item";
         entry.innerHTML = `<span class="research-icon" aria-hidden="true">${item.icon}</span><span><span class="research-name">${item.name}</span><span class="research-desc">${item.description}</span><span class="research-level">Level ${level} · Current boost +${Math.round(level * item.bonus * 100)}%</span></span>`;
-        entry.append(button);
+        entry.append(actions);
         return entry;
       }));
     }
 
-    function buyResearch(item) {
-      const level = state.researchLevels[item.id] || 0;
-      const cost = researchCost(item);
-      if (state.researchPoints < cost) return;
-      state.researchPoints -= cost;
-      state.researchLevels[item.id] = level + 1;
-      showToast(`${item.name} upgraded to level ${level + 1}!`);
+    function buyResearch(item, buyMax = false) {
+      let bought = 0;
+      let spent = 0;
+      while (state.researchPoints >= researchCost(item)) {
+        const cost = researchCost(item);
+        state.researchPoints -= cost;
+        spent += cost;
+        state.researchLevels[item.id] = (state.researchLevels[item.id] || 0) + 1;
+        bought++;
+        if (!buyMax) break;
+      }
+      if (!bought) return;
+      showToast(`${item.name} upgraded ×${bought} for ${format(spent)} research points!`);
       render();
       save();
     }

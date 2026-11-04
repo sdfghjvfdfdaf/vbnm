@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff3d6">
-  <title>Chris Kumar's Egg Clicker</title>
+  <title>Zander Kumar's is real</title>
   <style>
     :root {
       color-scheme: light;
@@ -155,6 +155,7 @@
     .upgrade-name { display: block; font-size: 13px; font-weight: 900; }
     .upgrade-desc { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
     .upgrade-cost { min-width: 55px; color: #a64e3d; font-size: 12px; font-weight: 900; text-align: right; }
+    .upgrade-cost-long { max-width: 132px; white-space: normal; overflow-wrap: anywhere; font-size: 10px; }
     .owned { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 700; }
     .buy-mode { display: flex; gap: 4px; margin-top: 13px; padding: 3px; border: 1px solid var(--line); border-radius: 11px; background: #f5ebd9; }
     .mode-button { flex: 1; min-height: 34px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 900; cursor: pointer; }
@@ -231,7 +232,7 @@
     <header class="topbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true">🥚</div>
-        <div><div class="brand-name">Kumar's Egg Club</div><div class="brand-note">Fresh from Chris's coop</div></div>
+        <div><div class="brand-name">Chris Kumar's Egg</div><div class="brand-note">Fresh from Chris's coop</div></div>
       </div>
     </header>
 
@@ -340,6 +341,7 @@
   <script>
     const upgrades = [
       { id: "spatula", name: "Golden scoop", description: "+1 egg per click", icon: "🥄", baseCost: 15, effect: 1, type: "click" },
+      { id: "antimatter", name: "Antimatter scoop", description: "+1,111,111,111 + 12Qa eggs per click", icon: "🌀", baseCost: 24000000000000000 + 99999999999, effect: 12000000000000000 + 1111111111, type: "click", priceLabel: "99,999,999,999 + 24Qa" },
       { id: "chris", name: "Chris's nesting box", description: "+1 egg per second", icon: "📖", baseCost: 50, effect: 1, type: "auto" },
       { id: "oven", name: "Cozy coop", description: "+6 eggs per second", icon: "🐔", baseCost: 180, effect: 6, type: "auto" },
       { id: "bakery", name: "Kumar egg farm", description: "+25 eggs per second", icon: "🏠", baseCost: 700, effect: 25, type: "auto" }
@@ -527,8 +529,9 @@
         button.className = "upgrade";
         button.type = "button";
         button.disabled = state.eggs < cost;
-        button.setAttribute("aria-label", `${state.buyMode === "max" ? "Buy as many as possible of" : "Buy"} ${item.name}; next costs ${format(cost)} eggs`);
-        button.innerHTML = `<span class="upgrade-icon" aria-hidden="true">${item.icon}</span><span><span class="upgrade-name">${item.name}</span><span class="upgrade-desc">${item.description}</span></span><span class="upgrade-cost">${state.buyMode === "max" ? "Next " : ""}${format(cost)}<span class="owned">Owned: ${state.owned[item.id] || 0}</span></span>`;
+        const costLabel = item.priceLabel && !state.owned[item.id] ? item.priceLabel : format(cost);
+        button.setAttribute("aria-label", `${state.buyMode === "max" ? "Buy as many as possible of" : "Buy"} ${item.name}; next costs ${costLabel} eggs`);
+        button.innerHTML = `<span class="upgrade-icon" aria-hidden="true">${item.icon}</span><span><span class="upgrade-name">${item.name}</span><span class="upgrade-desc">${item.description}</span></span><span class="upgrade-cost${item.priceLabel && !state.owned[item.id] ? " upgrade-cost-long" : ""}">${state.buyMode === "max" ? "Next " : ""}${costLabel}<span class="owned">Owned: ${state.owned[item.id] || 0}</span></span>`;
         button.addEventListener("click", () => buy(item));
         return button;
       }));

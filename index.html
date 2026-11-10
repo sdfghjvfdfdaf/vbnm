@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fff3d6">
+  <meta name="theme-color" content="#b8f5ef">
   <title>Zander Kumar's is real</title>
   <style>
     :root {
       color-scheme: light;
-      --ink: #30221d;
-      --muted: #806b5a;
-      --paper: #fffaf0;
-      --peach: #ff9a72;
-      --berry: #e85d75;
-      --mint: #78cdb0;
-      --gold: #f5bf4f;
-      --line: #ead9bd;
+      --ink: #17243a;
+      --muted: #4a6070;
+      --paper: #fffdf6;
+      --peach: #ff705c;
+      --berry: #e93661;
+      --mint: #37c6b4;
+      --gold: #ffdf43;
+      --line: #b6cbd0;
       font-family: "Trebuchet MS", "Avenir Next", sans-serif;
       color: var(--ink);
-      background: #fff3d6;
+      background: #b8f5ef;
     }
 
     * { box-sizing: border-box; }
@@ -26,9 +26,9 @@
       min-width: 320px;
       min-height: 100vh;
       margin: 0;
-      background-color: #fff3d6;
-      background-image: radial-gradient(#edcfaa 1px, transparent 1px);
-      background-size: 19px 19px;
+      background-color: #b8f5ef;
+      background-image: radial-gradient(#17344c 1px, transparent 1px), linear-gradient(135deg, #d6fcf7 0%, #effcff 58%, #fff3bd 100%);
+      background-size: 17px 17px, 100% 100%;
     }
 
     button { font: inherit; }
@@ -47,6 +47,7 @@
     .score-number { margin-top: 2px; font: 700 27px/1.1 Georgia, serif; font-variant-numeric: tabular-nums; }
     .score-center { text-align: center; }
     .rate { color: var(--berry); font-size: 13px; font-weight: 800; white-space: nowrap; }
+    .tax-status { margin-top: 4px; color: var(--muted); font-size: 10px; font-weight: 800; }
     .score-right { text-align: right; }
     .meter { width: 100%; height: 6px; margin-top: 7px; overflow: hidden; border-radius: 9px; background: #f1e4d1; }
     .meter-fill { width: 0; height: 100%; border-radius: inherit; background: var(--mint); transition: width .25s ease; }
@@ -98,7 +99,12 @@
     .egg-shop-chance { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.45; }
     .egg-shop-price { color: #a64e3d; font-size: 12px; font-weight: 900; text-align: right; white-space: nowrap; }
     .zoo-list { gap: 8px; margin-top: 0; }
-    .zoo-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; min-height: 58px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+    .zoo-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto auto; align-items: center; gap: 12px; min-height: 64px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+    .pet-illustration { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: radial-gradient(circle at 34% 28%, white 0 8%, transparent 9%), #e9f4e7; font-size: 27px; }
+    .pet-row.rare .pet-illustration { background-color: #e4f3f5; }
+    .pet-row.super-rare .pet-illustration { background-color: #eee7fb; }
+    .pet-row.mythic .pet-illustration { background-color: #fff0cf; }
+    .pet-row.god .pet-illustration { background-color: #e5e9ff; }
     .zoo-pet-info { display: grid; gap: 3px; }
     .zoo-pet-name { font-size: 12px; font-weight: 900; }
     .zoo-pet-perk { color: var(--muted); font-size: 10px; }
@@ -129,6 +135,10 @@
     .subtitle { z-index: 1; margin: 9px 0 18px; color: var(--muted); font-size: 14px; text-align: center; }
     .egg-button { position: relative; z-index: 1; display: grid; width: min(var(--egg-size, 210px), 78vw); aspect-ratio: 1; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; transition: width .22s ease; -webkit-tap-highlight-color: transparent; }
     .egg { position: relative; display: block; width: 88%; height: 96%; border: 4px solid #b98a4f; border-radius: 50% 50% 45% 45% / 59% 59% 41% 41%; background: radial-gradient(ellipse at 34% 24%, #fffef0 0 8%, transparent 9%), linear-gradient(135deg, #fffef2 10%, #f8e6ad 63%, #e8c77d 100%); box-shadow: inset -10px -12px 0 #e7ce94, inset 7px 8px 0 #fffef8, 0 13px 0 #b18a51, 0 20px 24px #9b723533; transition: transform .08s ease, filter .15s ease; }
+    .egg[data-skin="sunrise"] { border-color: #c06545; background: linear-gradient(135deg, #fff2aa, #fb956b 58%, #bb5275); }
+    .egg[data-skin="mint"] { border-color: #438d70; background: linear-gradient(135deg, #f3ffe5, #9adabc 58%, #438d70); }
+    .egg[data-skin="cosmic"] { border-color: #4a4988; background: radial-gradient(circle at 34% 24%, white 0 4%, transparent 5%), linear-gradient(135deg, #292e68, #7269b9 55%, #3c987e); }
+    .egg[data-skin="zander"] { border-color: #8f273e; background: radial-gradient(ellipse at 34% 24%, #fff7c5 0 8%, transparent 9%), linear-gradient(135deg, #fff0a8, #e65452 58%, #8f273e); box-shadow: inset -10px -12px 0 #ab3647, inset 7px 8px 0 #fff4cb, 0 13px 0 #812a3b, 0 20px 24px #9b723533; }
     .egg-button:hover .egg { filter: brightness(1.04); transform: translateY(-3px) rotate(-2deg); }
     .egg-button.bop .egg { animation: egg-bop .34s cubic-bezier(.2, .8, .25, 1); }
     .egg-face { position: absolute; top: 43%; left: 50%; width: 42%; transform: translateX(-50%); }
@@ -208,6 +218,35 @@
     .research-buy:hover:not(:disabled) { border-color: var(--ink); }
     .research-buy:disabled { cursor: not-allowed; opacity: .48; }
     .research-actions { display: grid; gap: 5px; }
+    .glory-wallet { margin: 4px 0 18px; color: #a64e3d; font: 700 22px Georgia, serif; }
+    .glory-section { max-width: 900px; padding: 18px 0; border-top: 1px solid var(--line); }
+    .tournament-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .tournament-controls .action-button[hidden] { display: none; }
+    .tournament-timer { min-width: 78px; color: var(--berry); font-weight: 900; }
+    .tournament-board { display: grid; max-width: 640px; margin-top: 14px; }
+    .tournament-row { display: grid; grid-template-columns: minmax(0, 1fr) 100px 100px; gap: 10px; padding: 9px 5px; border-bottom: 1px solid var(--line); font-size: 12px; }
+    .tournament-row:first-child { font-weight: 900; }
+    .tournament-row span:last-child { text-align: right; }
+    .skin-inventory { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; max-width: 760px; margin-top: 14px; }
+    .skin-item { display: grid; grid-template-columns: 42px minmax(0, 1fr); align-items: center; gap: 8px; min-height: 62px; padding: 7px; border-bottom: 1px solid var(--line); }
+    .skin-swatch { display: grid; width: 38px; height: 44px; place-items: center; border: 2px solid #b98a4f; border-radius: 50% 50% 45% 45% / 59% 59% 41% 41%; background: linear-gradient(135deg, #fffef2, #f8e6ad 63%, #e8c77d); font-size: 19px; }
+    .skin-swatch[data-skin="sunrise"] { border-color: #c06545; background: linear-gradient(135deg, #fff2aa, #fb956b 58%, #bb5275); }
+    .skin-swatch[data-skin="mint"] { border-color: #438d70; background: linear-gradient(135deg, #f3ffe5, #9adabc 58%, #438d70); }
+    .skin-swatch[data-skin="cosmic"] { border-color: #4a4988; background: linear-gradient(135deg, #292e68, #7269b9 55%, #3c987e); }
+    .skin-swatch[data-skin="zander"] { border-color: #9c3438; background: linear-gradient(135deg, #fff0a8, #e65452 58%, #8f273e); }
+    .skin-copy { min-width: 0; }
+    .skin-name { display: block; font-size: 11px; font-weight: 900; }
+    .skin-meta { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .skin-equip { grid-column: 1 / -1; min-height: 30px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); color: var(--ink); font-size: 10px; font-weight: 900; cursor: pointer; }
+    .skin-equip:disabled { cursor: default; opacity: .6; }
+    .big-egg-copy { max-width: 760px; margin: 0 0 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .big-egg-wallet { margin: 12px 0; color: #a64e3d; font: 700 22px Georgia, serif; }
+    .big-egg-progress { max-width: 620px; margin: 8px 0 18px; }
+    .big-egg-meter { height: 8px; overflow: hidden; border-radius: 8px; background: #f1e4d1; }
+    .big-egg-meter-fill { width: 0; height: 100%; border-radius: inherit; background: var(--gold); transition: width .25s ease; }
+    .big-egg-progress-label { margin-top: 5px; color: var(--muted); font-size: 11px; }
+    .big-egg-locked { max-width: 760px; padding: 14px; border-left: 3px solid var(--gold); background: #fff3d6; color: var(--ink); font-size: 12px; font-weight: 800; }
+    .big-egg-upgrades[hidden] { display: none; }
     .stock-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 4px 0 18px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .stock-stat-label { display: block; color: var(--muted); font-size: 10px; font-weight: 900; text-transform: uppercase; }
     .stock-stat-value { display: block; margin-top: 4px; font: 700 20px Georgia, serif; }
@@ -240,7 +279,6 @@
     .toast { position: fixed; right: 20px; bottom: 20px; z-index: 5; max-width: min(350px, calc(100vw - 40px)); padding: 12px 16px; border: 2px solid var(--ink); border-radius: 12px; background: var(--gold); box-shadow: 0 4px 0 var(--ink); font-size: 13px; font-weight: 800; animation: toast-in .25s ease-out; }
     @keyframes toast-in { from { opacity: 0; transform: translateY(10px); } }
     .footer { margin-top: 20px; color: #8d755f; font-size: 11px; text-align: center; }
-
     @media (max-width: 760px) {
       .game { padding: 15px 14px 24px; }
       .scorebar { gap: 8px; padding: 12px; }
@@ -256,6 +294,11 @@
       .achievement-list { grid-template-columns: 1fr; }
       .research-item { grid-template-columns: 42px minmax(0, 1fr); }
       .research-actions { grid-column: 2; display: flex; flex-wrap: wrap; }
+      .zoo-row { grid-template-columns: 42px minmax(0, 1fr) auto; gap: 8px; }
+      .pet-illustration { width: 40px; height: 40px; font-size: 24px; }
+      .zoo-quantity { grid-column: 2; }
+      .equip-button { grid-column: 3; grid-row: 1 / 3; }
+      .tournament-row { grid-template-columns: minmax(0, 1fr) 48px 76px; gap: 6px; font-size: 10px; }
     }
     @media (max-width: 390px) {
       .brand-name { font-size: 15px; }
@@ -264,7 +307,71 @@
       .score-center { grid-column: 1 / -1; grid-row: 2; }
       .score-right { grid-column: 2; grid-row: 1; }
       .rate { font-size: 11px; }
+      .tournament-row { grid-template-columns: minmax(0, 1fr) 40px 68px; }
     }
+
+    .game { width: min(1180px, 100%); }
+    .brand-mark { border: 3px solid var(--ink); border-radius: 12px; box-shadow: 3px 3px 0 var(--ink); }
+    .brand-name { font-family: "Trebuchet MS", "Avenir Next", sans-serif; font-size: 19px; font-weight: 1000; text-transform: uppercase; }
+    * { letter-spacing: 0; }
+    .brand-note { color: #355a68; font-weight: 900; }
+    .scorebar { border: 3px solid var(--ink); border-radius: 13px; background: var(--paper); box-shadow: 6px 6px 0 var(--ink); animation: pop-in .35s ease-out both; }
+    .score-label { color: #425c6a; font-weight: 1000; }
+    .score-number { color: var(--ink); text-shadow: 2px 2px 0 var(--gold); }
+    .rate { color: #df2853; font-weight: 1000; }
+    .tax-status { color: #425c6a; }
+    .meter { height: 9px; border: 1px solid var(--ink); background: #d7edeb; }
+    .meter-fill { background: var(--berry); }
+    .main-tabs { gap: 7px; border: 3px solid var(--ink); border-radius: 12px; background: var(--paper); box-shadow: 4px 4px 0 var(--ink); }
+    .main-tab { border: 2px solid transparent; border-radius: 8px; color: #425c6a; font-size: 12px; font-weight: 1000; text-transform: uppercase; transition: background .15s, color .15s, transform .15s; }
+    .main-tab:hover { transform: translateY(-2px); background: #ddf8f4; color: var(--ink); }
+    .main-tab[aria-selected="true"] { border-color: var(--ink); background: var(--berry); color: white; box-shadow: 2px 2px 0 var(--ink); }
+    .section-heading h1 { color: var(--ink); font-family: "Trebuchet MS", "Avenir Next", sans-serif; font-weight: 1000; text-shadow: 3px 3px 0 var(--gold); }
+    h1 { font-size: 40px; }
+    .section-heading h1 { font-size: 34px; }
+    .eyebrow { color: #db3156; }
+    .arcade-tabs { border: 2px solid var(--ink); border-radius: 10px; background: var(--paper); }
+    .arcade-tab { border-radius: 7px; color: #425c6a; font-weight: 1000; }
+    .arcade-tab[aria-selected="true"] { background: var(--gold); color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+    .bakery, .shop { border: 3px solid var(--ink); border-radius: 14px; box-shadow: 6px 6px 0 var(--ink); }
+    .bakery { background-color: var(--peach); background-image: radial-gradient(#17243a 1px, transparent 1px); background-size: 17px 17px; }
+    .bakery::before, .bakery::after { width: 140px; height: 140px; border: 0; border-radius: 0; clip-path: polygon(50% 0, 61% 34%, 97% 20%, 72% 50%, 100% 80%, 63% 69%, 50% 100%, 38% 69%, 0 80%, 28% 50%, 3% 20%, 39% 34%); opacity: .8; }
+    .bakery::before { top: -50px; left: -38px; background: var(--gold); }
+    .bakery::after { right: -56px; bottom: -55px; width: 170px; height: 170px; background: var(--mint); }
+    .bakery h1 { text-shadow: 2px 2px 0 var(--gold); }
+    .shop { background: var(--paper); }
+    .shop-heading { border-color: var(--ink); border-bottom-width: 2px; }
+    .shop-heading h2, .arcade-game h2, .zone-heading h2 { color: var(--ink); font-family: "Trebuchet MS", "Avenir Next", sans-serif; font-weight: 1000; }
+    .upgrade { border: 2px solid var(--ink); border-radius: 9px; box-shadow: 2px 2px 0 #bdd1d2; }
+    .upgrade:hover:not(:disabled) { box-shadow: 3px 3px 0 var(--ink); }
+    .upgrade-icon { border: 1px solid var(--ink); border-radius: 9px; background: #bff4ef; }
+    .buy-mode { border: 2px solid var(--ink); background: #d5f7f2; }
+    .mode-button[aria-pressed="true"] { outline: 2px solid var(--ink); background: var(--gold); box-shadow: 2px 2px 0 var(--ink); }
+    .action-button, .rebirth-button { border: 3px solid var(--ink); border-radius: 8px; background: var(--berry); box-shadow: 3px 3px 0 var(--ink); color: white; font-weight: 1000; transition: transform .12s, box-shadow .12s, filter .12s; }
+    .action-button:hover:not(:disabled), .rebirth-button:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+    .action-button:active:not(:disabled), .rebirth-button:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+    .arcade-game { border: 3px solid var(--ink); border-radius: 12px; box-shadow: 5px 5px 0 var(--ink); background-color: var(--paper); background-image: radial-gradient(#d5e7e5 1px, transparent 1px); background-size: 18px 18px; }
+    .slot-reels span, .scratch-slots span { border: 3px solid var(--ink); border-radius: 9px; background: #fff3a7; box-shadow: 3px 3px 0 var(--ink); }
+    .wheel-display { border: 5px solid var(--ink); box-shadow: 4px 4px 0 var(--gold); }
+    .egg-shop-button { border: 2px solid var(--ink); border-radius: 9px; box-shadow: 2px 2px 0 #bdd1d2; }
+    .egg-shop-button:hover:not(:disabled) { box-shadow: 3px 3px 0 var(--ink); }
+    .pet-illustration { border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+    .equip-button, .research-buy, .skin-equip, .stock-trade button { border: 2px solid var(--ink); border-radius: 7px; background: var(--gold); color: var(--ink); font-weight: 1000; }
+    .achievement { border: 2px solid var(--ink); background: var(--paper); }
+    .achievement.unlocked { border-color: var(--ink); background: #fff2a1; box-shadow: 2px 2px 0 var(--ink); }
+    .rebirth-panel { border-color: var(--ink); }
+    .research-item, .skin-item { border-color: var(--ink); border-radius: 9px; background: var(--paper); }
+    .glory-section { border-top: 2px solid var(--ink); }
+    .stock-summary { border-color: var(--ink); border-width: 2px 0; }
+    .stock-table-wrap { border-color: var(--ink); }
+    .stock-table th, .stock-table td { border-color: #b6cbd0; }
+    .tournament-row { border-color: #b6cbd0; }
+    .tournament-row.unlocked { color: #d52d51; font-weight: 1000; }
+    .setting-row { border-color: #b6cbd0; }
+    button:focus-visible, input:focus-visible { outline: 3px solid #e93661; outline-offset: 3px; }
+    @keyframes pop-in { from { opacity: 0; transform: translateY(7px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @media (max-width: 760px) { h1 { font-size: 32px; } .section-heading h1 { font-size: 30px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
   </style>
 </head>
 <body>
@@ -278,7 +385,7 @@
 
     <section class="scorebar" aria-label="Egg score">
       <div><div class="score-label">Egg stash</div><div class="score-number" id="eggs">0</div></div>
-      <div class="score-center"><div class="rate" id="rate">+0 eggs / second</div><div class="meter"><div class="meter-fill" id="meter-fill"></div></div></div>
+      <div class="score-center"><div class="rate" id="rate">+0 eggs / second</div><div class="tax-status" id="tax-status">Egg tax: 0% · Paid: 0</div><div class="meter"><div class="meter-fill" id="meter-fill"></div></div></div>
       <div class="score-right"><div class="score-label">Collected all-time</div><div class="score-number" id="lifetime">0</div></div>
     </section>
 
@@ -286,8 +393,10 @@
       <button class="main-tab" id="tab-clicker" type="button" role="tab" aria-selected="true" aria-controls="clicker-tab" data-tab-target="clicker-tab">Egg farm</button>
       <button class="main-tab" id="tab-arcade" type="button" role="tab" aria-selected="false" aria-controls="arcade-tab" data-tab-target="arcade-tab">Arcade</button>
       <button class="main-tab" id="tab-pets" type="button" role="tab" aria-selected="false" aria-controls="pets-tab" data-tab-target="pets-tab">Pets</button>
+      <button class="main-tab" id="tab-glory" type="button" role="tab" aria-selected="false" aria-controls="glory-tab" data-tab-target="glory-tab">Tournament &amp; Glory</button>
       <button class="main-tab" id="tab-rebirth" type="button" role="tab" aria-selected="false" aria-controls="rebirth-tab" data-tab-target="rebirth-tab">Rebirth</button>
       <button class="main-tab" id="tab-research" type="button" role="tab" aria-selected="false" aria-controls="research-tab" data-tab-target="research-tab">Research</button>
+      <button class="main-tab" id="tab-big-eggs" type="button" role="tab" aria-selected="false" aria-controls="big-eggs-tab" data-tab-target="big-eggs-tab">Big Egg Zone</button>
       <button class="main-tab" id="tab-stocks" type="button" role="tab" aria-selected="false" aria-controls="stocks-tab" data-tab-target="stocks-tab">Stocks</button>
       <button class="main-tab" id="tab-settings" type="button" role="tab" aria-selected="false" aria-controls="settings-tab" data-tab-target="settings-tab">Settings</button>
     </nav>
@@ -299,7 +408,7 @@
         <h1>Chris Kumar's<br>Egg Clicker</h1>
         <p class="subtitle">Tap the egg. Watch it grow. Hatch a pet.</p>
         <button class="egg-button" id="egg-button" type="button" aria-label="Collect an egg">
-          <span class="egg" aria-hidden="true"><span class="egg-face"><span class="eyes"><i class="eye"></i><i class="eye"></i></span><i class="smile"></i></span></span>
+          <span class="egg" id="egg-visual" data-skin="classic" aria-hidden="true"><span class="egg-face"><span class="eyes"><i class="eye"></i><i class="eye"></i></span><i class="smile"></i></span></span>
         </button>
         <p class="tap-hint">TAP THE EGG TO COLLECT</p>
       </section>
@@ -366,6 +475,33 @@
         </section>
       </div>
     </section>
+    <section class="tab-panel" id="glory-tab" role="tabpanel" aria-labelledby="tab-glory" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Win tournaments, collect styles</p><h1>Tournament &amp; Glory</h1></div></div>
+      <div class="glory-wallet">Glory Points: <strong id="glory-points">0</strong></div>
+      <section class="glory-section">
+        <div class="zone-heading"><h2>Daily tap tournament</h2><span id="tournament-date">Today</span></div>
+        <p class="progression-intro">You get one 10-second run per UTC day. Tap fast to beat the AI flock and earn Glory Points.</p>
+        <div class="tournament-controls">
+          <button class="action-button" id="tournament-start" type="button">Start today's run</button>
+          <button class="action-button" id="tournament-tap" type="button" hidden disabled>Tap! · 0</button>
+          <span class="tournament-timer" id="tournament-timer">10 seconds</span>
+        </div>
+        <p class="game-result" id="tournament-result" aria-live="polite">Your daily attempt is ready.</p>
+        <div class="tournament-board" id="tournament-board" aria-label="Daily tournament standings"></div>
+      </section>
+      <section class="glory-section">
+        <div class="zone-heading"><h2>Egg exchange</h2><span>Cost increases each time</span></div>
+        <p class="progression-intro">Trade a large pile of eggs for 1 Glory Point. The price starts at 1T eggs and doubles after each exchange.</p>
+        <button class="action-button" id="glory-exchange" type="button" disabled>Exchange eggs · 1T</button>
+      </section>
+      <section class="glory-section">
+        <div class="zone-heading"><h2>Egg skin packs</h2><span>10 Glory Points per pack</span></div>
+        <p class="progression-intro">Each pack unlocks an egg skin. Zander's Egg is the rarest skin, with a 0.005% chance per pack.</p>
+        <button class="action-button" id="skin-pack" type="button" disabled>Open skin pack · 10 Glory</button>
+        <p class="game-result" id="skin-pack-result" aria-live="polite">Your classic egg is ready.</p>
+        <div class="skin-inventory" id="skin-inventory"></div>
+      </section>
+    </section>
     <section class="tab-panel" id="rebirth-tab" role="tabpanel" aria-labelledby="tab-rebirth" hidden>
       <div class="section-heading"><div><p class="eyebrow">Start again, stronger</p><h1>Rebirth</h1></div></div>
       <section class="rebirth-panel"><h2>Permanent progress</h2><p class="progression-intro">Trade this run's eggs and upgrades for rebirth stars.</p>
@@ -383,6 +519,14 @@
       <div class="research-wallet">Research points: <strong id="research-points">0</strong></div>
       <div class="research-list" id="research-list"></div>
     </section>
+    <section class="tab-panel" id="big-eggs-tab" role="tabpanel" aria-labelledby="tab-big-eggs" hidden>
+      <div class="section-heading"><div><p class="eyebrow">A new tier of progress</p><h1>Big Egg Zone</h1></div></div>
+      <div class="big-egg-wallet">Big Egg Coins: <strong id="big-egg-coins">0</strong></div>
+      <p class="big-egg-copy">Reach 1B lifetime eggs to unlock this zone. Earn one Big Egg Coin for every new 1B lifetime eggs after that. Regular eggs cannot be exchanged or spent here.</p>
+      <div class="big-egg-progress"><div class="big-egg-meter"><div class="big-egg-meter-fill" id="big-egg-meter-fill"></div></div><div class="big-egg-progress-label" id="big-egg-progress-label">0 / 1B lifetime eggs</div></div>
+      <p class="big-egg-locked" id="big-egg-locked">Locked until you earn 1B lifetime eggs.</p>
+      <div class="big-egg-upgrades research-list" id="big-egg-upgrades" hidden></div>
+    </section>
     <section class="tab-panel" id="stocks-tab" role="tabpanel" aria-labelledby="tab-stocks" hidden>
       <div class="section-heading"><div><p class="eyebrow">A fictional market, powered by egg money</p><h1>Kumar Exchange</h1></div></div>
       <div class="stock-summary" aria-live="polite">
@@ -395,7 +539,7 @@
         <button class="arcade-tab" id="stocks-view-news" type="button" role="tab" aria-selected="false">News</button>
       </div>
       <section class="stock-view" id="stocks-market-view" role="tabpanel" aria-labelledby="stocks-view-market">
-        <div class="stock-tools"><label for="stock-quantity">Shares per trade <input id="stock-quantity" type="number" min="1" max="1000000" step="1" value="1"></label><span>Prices update every 15 seconds. News can move a stock sharply.</span></div>
+        <div class="stock-tools"><label for="stock-quantity">Shares per trade <input id="stock-quantity" type="number" min="1" max="1000000" step="1" value="1"></label><span>Prices update every 15 seconds. News can move a stock sharply. Buys and sells have a 3% exchange fee.</span></div>
         <div class="stock-table-wrap"><table class="stock-table"><thead><tr><th>Company</th><th>Sector</th><th>Price</th><th>Last move</th><th>Your shares</th><th>Value</th><th>Trade</th></tr></thead><tbody id="stock-list"></tbody></table></div>
       </section>
       <section class="stock-view" id="stocks-news-view" role="tabpanel" aria-labelledby="stocks-view-news" hidden>
@@ -407,6 +551,7 @@
       <section class="settings-list">
         <div class="setting-row"><div><strong>Click sounds</strong><small>Play a soft sound when you collect eggs.</small></div><button class="setting-toggle" id="sound-button" type="button" role="switch" aria-checked="true">On</button></div>
         <div class="setting-row"><div><strong>Saved progress</strong><small>Your game saves automatically in this browser.</small></div><span class="save-status">Auto-save on</span></div>
+        <div class="setting-row"><div><strong>Egg taxes &amp; exchange fees</strong><small>Income-tax rate follows your current stash: 0% below 10K, then 2% at 10K, 3% at 1M, 4% at 1B, 6% at 1T, and 8% at 1Qa. Stock trades have a 3% fee. Graham's Number is represented as a symbolic cap because browsers cannot store the literal value.</small></div><span class="save-status" id="taxes-paid">0 eggs paid</span></div>
         <div class="setting-row danger-row"><div><strong>Reset all progress</strong><small>Clears eggs, pets, achievements, and rebirths.</small></div><button class="action-button danger-button" id="reset-button" type="button">Reset game</button></div>
       </section>
     </section>
@@ -415,6 +560,7 @@
   <div id="toast-region" aria-live="polite"></div>
 
   <script>
+    const GRAHAM_CAP = Number.MAX_VALUE;
     const upgrades = [
       { id: "spatula", name: "Golden scoop", description: "+1 egg per click", icon: "🥄", baseCost: 15, effect: 1, type: "click" },
       { id: "antimatter", name: "Antimatter scoop", description: "+1,111,111,111 + 12Qa eggs per click", icon: "🌀", baseCost: 24000000000000000 + 99999999999, effect: 12000000000000000 + 1111111111, type: "click", priceLabel: "99,999,999,999 + 24Qa" },
@@ -427,14 +573,26 @@
       god: { name: "God egg", icon: "🌟", baseCost: 5000000000, chances: "Rare 30% · Super Rare 50% · Mythic 19% · God 1%" }
     };
     const petTiers = [
-      { rarity: "Common", className: "common", bonus: 0.01, pets: [{ id: "sprout", name: "Sprout", icon: "🐣" }, { id: "crumb", name: "Crumb", icon: "🐤" }, { id: "moss", name: "Moss", icon: "🐥" }] },
-      { rarity: "Rare", className: "rare", bonus: 0.03, pets: [{ id: "puddle", name: "Puddle", icon: "🦆" }, { id: "pippin", name: "Pippin", icon: "🐰" }, { id: "shellby", name: "Shellby", icon: "🐢" }] },
-      { rarity: "Super Rare", className: "super-rare", bonus: 0.08, pets: [{ id: "ember", name: "Ember", icon: "🦊" }, { id: "comet", name: "Comet", icon: "🐲" }, { id: "moonbeam", name: "Moonbeam", icon: "🦄" }] },
-      { rarity: "Mythic", className: "mythic", bonus: 0.5, pets: [{ id: "starflame", name: "Starflame", icon: "🐉" }] },
-      { rarity: "God", className: "god", bonus: 2, pets: [{ id: "aurora", name: "Aurora", icon: "🪽" }, { id: "solaris", name: "Solaris", icon: "☀️" }] }
+      { rarity: "Common", className: "common", bonus: 0.01, pets: [{ id: "sprout", name: "Sprout", icon: "🐣" }, { id: "crumb", name: "Crumb", icon: "🐤" }, { id: "moss", name: "Moss", icon: "🐥" }, { id: "peep", name: "Peep", icon: "🐭" }, { id: "dandelion", name: "Dandelion", icon: "🐹" }] },
+      { rarity: "Rare", className: "rare", bonus: 0.03, pets: [{ id: "puddle", name: "Puddle", icon: "🦆" }, { id: "pippin", name: "Pippin", icon: "🐰" }, { id: "shellby", name: "Shellby", icon: "🐢" }, { id: "buttons", name: "Buttons", icon: "🐸" }, { id: "juniper", name: "Juniper", icon: "🦜" }] },
+      { rarity: "Super Rare", className: "super-rare", bonus: 0.08, pets: [{ id: "ember", name: "Ember", icon: "🦊" }, { id: "comet", name: "Comet", icon: "🐲" }, { id: "moonbeam", name: "Moonbeam", icon: "🦄" }, { id: "tinsel", name: "Tinsel", icon: "🐼" }] },
+      { rarity: "Mythic", className: "mythic", bonus: 0.5, pets: [{ id: "starflame", name: "Starflame", icon: "🐉" }, { id: "starling", name: "Starling", icon: "🦚" }] },
+      { rarity: "God", className: "god", bonus: 2, pets: [{ id: "aurora", name: "Aurora", icon: "🪽" }, { id: "solaris", name: "Solaris", icon: "☀️" }, { id: "cosmo", name: "Cosmo", icon: "🐙" }] }
     ];
     const petById = Object.fromEntries(petTiers.flatMap(tier => tier.pets.map(pet => [pet.id, { ...pet, rarity: tier.rarity, className: tier.className, bonus: tier.bonus }])));
     const petIds = Object.keys(petById);
+    const eggSkins = [
+      { id: "classic", name: "Classic Egg", rarity: "Starter" },
+      { id: "sunrise", name: "Sunrise Egg", rarity: "Common" },
+      { id: "mint", name: "Mint Egg", rarity: "Common" },
+      { id: "cosmic", name: "Cosmic Egg", rarity: "Rare" },
+      { id: "zander", name: "Zander's Egg", rarity: "Mythic", chance: "0.005%" }
+    ];
+    const skinIds = new Set(eggSkins.map(skin => skin.id));
+    const gloryPackCost = 10;
+    const gloryEggCostBase = 1e12;
+    const tournamentDurationMs = 10000;
+    const tournamentOpponents = ["Peep Pro", "Shell Shock", "Count Cluck", "Speedy Sprout", "Mochi"];
     const rebirthRequirement = 10000;
     const research = [
       { id: "touch", name: "Quantum touch", icon: "⚛️", description: "Click earnings +25% per level", bonus: 0.25 },
@@ -454,6 +612,20 @@
       name: `${founder} Kumar ${stockSectors[index % stockSectors.length]}`,
       sector: stockSectors[index % stockSectors.length]
     }));
+    const eggTaxBrackets = [
+      { minimum: 1e15, rate: 0.08 },
+      { minimum: 1e12, rate: 0.06 },
+      { minimum: 1e9, rate: 0.04 },
+      { minimum: 1e6, rate: 0.03 },
+      { minimum: 1e4, rate: 0.02 }
+    ];
+    const stockTradeTaxRate = 0.03;
+    const bigEggThreshold = 1_000_000_000;
+    const bigEggUpgrades = [
+      { id: "titan-scoop", name: "Titan's scoop", icon: "🥄", description: "+25% click earnings per level", baseCost: 1, effect: 0.25, type: "click" },
+      { id: "colossal-coop", name: "Colossal coop", icon: "🏠", description: "+100,000 eggs per second per level", baseCost: 1, effect: 100000, type: "auto" },
+      { id: "universal-nest", name: "Universal nest", icon: "🌌", description: "+10% all egg income per level", baseCost: 3, effect: 0.1, type: "income" }
+    ];
     const achievements = [
       { id: "first-click", icon: "👆", name: "First tap", description: "Click the egg once", reward: 10, check: game => game.clicks >= 1 },
       { id: "hundred-clicks", icon: "💪", name: "Egg enthusiast", description: "Click the egg 100 times", reward: 100, check: game => game.clicks >= 100 },
@@ -463,10 +635,12 @@
       { id: "mythic-pet", icon: "🌟", name: "Mythic moment", description: "Hatch a Mythic pet", reward: 1000, check: game => game.pets.starflame > 0 },
       { id: "first-rebirth", icon: "♻️", name: "Fresh start", description: "Rebirth for the first time", reward: 1000, check: game => game.rebirths >= 1 }
     ];
-    const defaults = { eggs: 0, lifetime: 0, runEggs: 0, bestRun: 0, clickPower: 1, clicks: 0, rebirths: 0, researchPoints: 0, researchLevels: {}, owned: {}, pets: {}, equipped: {}, eggPurchases: { normal: 0, god: 0 }, achievements: {}, arcadeBest: 0, buyMode: "one", activeTab: "clicker", arcadeGame: "slots", stockView: "market", market: null, sound: true, lastSaved: Date.now() };
+    const defaults = { eggs: 0, lifetime: 0, runEggs: 0, bestRun: 0, clickPower: 1, clicks: 0, rebirths: 0, researchPoints: 0, researchLevels: {}, taxesPaid: 0, taxRemainder: 0, bigEggCoins: 0, bigCoinMilestone: 0, bigEggUnlocked: false, bigEggOwned: {}, gloryPoints: 0, gloryExchanges: 0, ownedSkins: {}, equippedSkin: "classic", tournamentDay: "", tournamentPlayed: false, tournamentComplete: false, tournamentScore: 0, tournamentRank: 0, tournamentReward: 0, owned: {}, pets: {}, equipped: {}, eggPurchases: { normal: 0, god: 0 }, achievements: {}, arcadeBest: 0, buyMode: "one", activeTab: "clicker", arcadeGame: "slots", stockView: "market", market: null, sound: true, lastSaved: Date.now() };
     let state = loadState();
     let toastTimer;
     let audioContext;
+    let activeTournament = null;
+    let tournamentInterval = null;
 
     function createMarketState(savedMarket) {
       const prices = Object.fromEntries(stockCompanies.map(company => {
@@ -502,6 +676,8 @@
         pets: Object.fromEntries(petIds.map(id => [id, 0])),
         equipped: Object.fromEntries(petIds.map(id => [id, 0])),
         researchLevels: Object.fromEntries(research.map(item => [item.id, 0])),
+        bigEggOwned: Object.fromEntries(bigEggUpgrades.map(item => [item.id, 0])),
+        ownedSkins: { classic: 1 },
         market: createMarketState(),
         eggPurchases: { normal: 0, god: 0 },
         achievements: Object.fromEntries(achievements.map(item => [item.id, false]))
@@ -524,17 +700,41 @@
           openPetSlots -= count;
         }
         const unlockedAchievements = Object.fromEntries(achievements.map(item => [item.id, Boolean(saved.achievements?.[item.id])]));
+        const lifetime = Math.min(GRAHAM_CAP, Math.max(0, Number(saved.lifetime) || 0));
+        const hasBigCoinMilestone = Number.isFinite(Number(saved.bigCoinMilestone));
+        const bigCoinMilestone = hasBigCoinMilestone ? Math.max(0, Math.floor(Number(saved.bigCoinMilestone))) : Math.floor(lifetime / bigEggThreshold);
+        const legacyEntryCoin = !hasBigCoinMilestone && lifetime >= bigEggThreshold && saved.bigEggCoins === undefined ? 1 : 0;
+        const today = new Date().toISOString().slice(0, 10);
+        const tournamentIsCurrent = saved.tournamentDay === today;
+        const ownedSkins = Object.fromEntries(eggSkins.map(skin => [skin.id, Math.max(skin.id === "classic" ? 1 : 0, Math.floor(Number(saved.ownedSkins?.[skin.id]) || 0))]));
+        const equippedSkin = skinIds.has(saved.equippedSkin) && ownedSkins[saved.equippedSkin] > 0 ? saved.equippedSkin : "classic";
         const result = {
           ...defaults,
-          eggs: Math.max(0, Number(saved.eggs ?? saved.cookies) || 0),
-          lifetime: Math.max(0, Number(saved.lifetime) || 0),
-          runEggs: Math.max(0, Number(saved.runEggs ?? saved.lifetime) || 0),
-          bestRun: Math.max(0, Number(saved.bestRun) || 0),
+          eggs: Math.min(GRAHAM_CAP, Math.max(0, Number(saved.eggs ?? saved.cookies) || 0)),
+          lifetime,
+          runEggs: Math.min(GRAHAM_CAP, Math.max(0, Number(saved.runEggs ?? saved.lifetime) || 0)),
+          bestRun: Math.min(GRAHAM_CAP, Math.max(0, Number(saved.bestRun) || 0)),
           clickPower: Math.max(1, Number(saved.clickPower) || 1),
           clicks: Math.max(0, Number(saved.clicks) || 0),
           rebirths: Math.max(0, Math.floor(Number(saved.rebirths) || 0)),
           researchPoints: Math.max(0, Math.floor(Number(saved.researchPoints) || 0)),
           researchLevels: Object.fromEntries(research.map(item => [item.id, Math.max(0, Math.floor(Number(saved.researchLevels?.[item.id]) || 0))])),
+          taxesPaid: Math.min(GRAHAM_CAP, Math.max(0, Number(saved.taxesPaid) || 0)),
+          taxRemainder: Math.min(0.999999999, Math.max(0, Number(saved.taxRemainder) || 0)),
+          bigEggCoins: Math.min(GRAHAM_CAP, Math.max(0, Number(saved.bigEggCoins) || legacyEntryCoin)),
+          bigCoinMilestone,
+          bigEggUnlocked: saved.bigEggUnlocked === true || lifetime >= bigEggThreshold,
+          bigEggOwned: Object.fromEntries(bigEggUpgrades.map(item => [item.id, Math.max(0, Math.floor(Number(saved.bigEggOwned?.[item.id]) || 0))])),
+          gloryPoints: Math.min(GRAHAM_CAP, Math.max(0, Math.floor(Number(saved.gloryPoints) || 0))),
+          gloryExchanges: Math.max(0, Math.floor(Number(saved.gloryExchanges) || 0)),
+          ownedSkins,
+          equippedSkin,
+          tournamentDay: today,
+          tournamentPlayed: tournamentIsCurrent && Boolean(saved.tournamentPlayed),
+          tournamentComplete: tournamentIsCurrent && Boolean(saved.tournamentComplete),
+          tournamentScore: tournamentIsCurrent ? Math.max(0, Math.floor(Number(saved.tournamentScore) || 0)) : 0,
+          tournamentRank: tournamentIsCurrent ? Math.max(0, Math.floor(Number(saved.tournamentRank) || 0)) : 0,
+          tournamentReward: tournamentIsCurrent ? Math.max(0, Math.floor(Number(saved.tournamentReward) || 0)) : 0,
           market: createMarketState(saved.market),
           owned,
           pets,
@@ -543,19 +743,16 @@
           achievements: unlockedAchievements,
           arcadeBest: Math.max(0, Number(saved.arcadeBest) || 0),
           buyMode: ["one", "ten", "max"].includes(saved.buyMode) ? saved.buyMode : "one",
-          activeTab: ["clicker", "arcade", "pets", "rebirth", "research", "stocks", "settings"].includes(saved.activeTab) ? saved.activeTab : "clicker",
+          activeTab: ["clicker", "arcade", "pets", "glory", "rebirth", "research", "big-eggs", "stocks", "settings"].includes(saved.activeTab) ? saved.activeTab : "clicker",
           arcadeGame: ["slots", "wheel", "scratch", "flappy", "allin"].includes(saved.arcadeGame) ? saved.arcadeGame : "slots",
           stockView: saved.stockView === "news" ? "news" : "market",
           sound: saved.sound !== false,
           lastSaved: Number(saved.lastSaved) || Date.now()
         };
         const elapsed = Math.min(8 * 60 * 60, Math.max(0, (Date.now() - Number(saved.lastSaved || Date.now())) / 1000));
-        const offlineEggs = Math.floor(eggsPerSecond(owned, equipped, result.rebirths, result.researchLevels) * elapsed);
-        result.eggs += offlineEggs;
-        result.lifetime += offlineEggs;
-        result.runEggs += offlineEggs;
-        result.bestRun = Math.max(result.bestRun, result.runEggs);
-        if (offlineEggs > 0) setTimeout(() => showToast(`Welcome back! Your coop made ${format(offlineEggs)} eggs.`), 300);
+        const offlineEggs = Math.floor(eggsPerSecond(owned, equipped, result.rebirths, result.researchLevels, result.bigEggOwned) * elapsed);
+        const offlineIncome = collectEggIncome(offlineEggs, result);
+        if (offlineEggs > 0) setTimeout(() => showToast(`Welcome back! Your coop made ${format(offlineIncome.net)} eggs after ${format(offlineIncome.tax)} tax.`), 300);
         return result;
       } catch {
         return createFreshState();
@@ -563,7 +760,8 @@
     }
 
     function format(value) {
-      if (value < 1000) return Math.floor(value).toLocaleString();
+      if (value >= GRAHAM_CAP) return "Graham's Number";
+      if (value < 1000) return Number(value.toFixed(2)).toLocaleString();
       const units = ["K", "M", "B", "T", "Qa"];
       let amount = value;
       let unit = -1;
@@ -588,9 +786,18 @@
       return (1 + petIncomeBonus(pets, researchLevels)) * (1 + rebirths * 0.1);
     }
 
-    function eggsPerSecond(owned = state.owned, pets = state.equipped, rebirths = state.rebirths, researchLevels = state.researchLevels) {
+    function bigEggIncomeMultiplier(owned = state.bigEggOwned) {
+      return 1 + (owned["universal-nest"] || 0) * 0.1;
+    }
+
+    function bigEggClickMultiplier(owned = state.bigEggOwned) {
+      return 1 + (owned["titan-scoop"] || 0) * 0.25;
+    }
+
+    function eggsPerSecond(owned = state.owned, pets = state.equipped, rebirths = state.rebirths, researchLevels = state.researchLevels, bigOwned = state.bigEggOwned) {
       const baseRate = upgrades.reduce((total, item) => total + (item.type === "auto" ? item.effect * (owned[item.id] || 0) : 0), 0);
-      return baseRate * incomeMultiplier(pets, rebirths, researchLevels) * (1 + (researchLevels.engines || 0) * 0.2);
+      const bigEggRate = bigEggUpgrades.reduce((total, item) => total + (item.type === "auto" ? item.effect * (bigOwned[item.id] || 0) : 0), 0);
+      return (baseRate + bigEggRate) * incomeMultiplier(pets, rebirths, researchLevels) * (1 + (researchLevels.engines || 0) * 0.2) * bigEggIncomeMultiplier(bigOwned);
     }
 
     function clickResearchMultiplier(researchLevels = state.researchLevels) {
@@ -599,6 +806,10 @@
 
     function researchCost(item) {
       return 1 + (state.researchLevels[item.id] || 0) * 2;
+    }
+
+    function bigEggUpgradeCost(item) {
+      return Math.ceil(item.baseCost * Math.pow(1.7, state.bigEggOwned[item.id] || 0));
     }
 
     function eggCostFor(type) {
@@ -613,6 +824,40 @@
       return Math.floor(item.baseCost * Math.pow(1.16, state.owned[item.id] || 0));
     }
 
+    function eggTaxRate(balance = state.eggs) {
+      return eggTaxBrackets.find(bracket => balance >= bracket.minimum)?.rate || 0;
+    }
+
+    function grantBigEggMilestones(target = state) {
+      const reachedMilestone = Math.floor(target.lifetime / bigEggThreshold);
+      const newCoins = Math.max(0, reachedMilestone - target.bigCoinMilestone);
+      if (newCoins > 0) {
+        target.bigEggCoins = Math.min(GRAHAM_CAP, target.bigEggCoins + newCoins);
+        target.bigCoinMilestone = reachedMilestone;
+      }
+      if (target.lifetime >= bigEggThreshold) target.bigEggUnlocked = true;
+      return newCoins;
+    }
+
+    function collectEggIncome(amount, target = state, taxableBalance = target.eggs) {
+      const gross = Math.min(GRAHAM_CAP, Math.max(0, Number(amount) || 0));
+      const accruedTax = gross * eggTaxRate(taxableBalance) + (target.taxRemainder || 0);
+      const tax = Math.floor(accruedTax);
+      const net = gross - tax;
+      target.eggs = Math.min(GRAHAM_CAP, target.eggs + net);
+      target.lifetime = Math.min(GRAHAM_CAP, target.lifetime + gross);
+      target.runEggs = Math.min(GRAHAM_CAP, target.runEggs + net);
+      target.taxesPaid = Math.min(GRAHAM_CAP, target.taxesPaid + tax);
+      target.taxRemainder = accruedTax - tax;
+      target.bestRun = Math.min(GRAHAM_CAP, Math.max(target.bestRun, target.runEggs));
+      grantBigEggMilestones(target);
+      return { net, tax };
+    }
+
+    function netEggIncome(amount, balance = state.eggs) {
+      return amount * (1 - eggTaxRate(balance));
+    }
+
     function save() {
       state.lastSaved = Date.now();
       try { localStorage.setItem("kumar-cookie-club", JSON.stringify(state)); } catch { showToast("Could not save. Browser storage may be full."); }
@@ -620,18 +865,15 @@
 
     function checkAchievements() {
       const unlocked = [];
+      let netReward = 0;
       for (const achievement of achievements) {
         if (state.achievements[achievement.id] || !achievement.check(state)) continue;
         state.achievements[achievement.id] = true;
-        state.eggs += achievement.reward;
-        state.lifetime += achievement.reward;
-        state.runEggs += achievement.reward;
-        state.bestRun = Math.max(state.bestRun, state.runEggs);
+        netReward += collectEggIncome(achievement.reward).net;
         unlocked.push(achievement);
       }
       if (unlocked.length) {
-        const reward = unlocked.reduce((total, item) => total + item.reward, 0);
-        showToast(`${unlocked.length} achievement${unlocked.length === 1 ? "" : "s"} unlocked! +${format(reward)} eggs`);
+        showToast(`${unlocked.length} achievement${unlocked.length === 1 ? "" : "s"} unlocked! +${format(netReward)} eggs after tax`);
         save();
       }
     }
@@ -640,8 +882,10 @@
       checkAchievements();
       document.getElementById("eggs").textContent = format(state.eggs);
       document.getElementById("lifetime").textContent = format(state.lifetime);
-      document.getElementById("rate").textContent = `+${format(eggsPerSecond())} eggs / second`;
-      document.getElementById("click-power").textContent = `+${format(state.clickPower * incomeMultiplier() * clickResearchMultiplier())}`;
+      document.getElementById("rate").textContent = `+${format(netEggIncome(eggsPerSecond()))} eggs / second after tax`;
+      document.getElementById("tax-status").textContent = `Egg tax: ${Math.round(eggTaxRate() * 100)}% · Paid: ${format(state.taxesPaid)}`;
+      document.getElementById("taxes-paid").textContent = `${format(state.taxesPaid)} eggs paid`;
+      document.getElementById("click-power").textContent = `+${format(netEggIncome(state.clickPower * incomeMultiplier() * clickResearchMultiplier() * bigEggClickMultiplier() * bigEggIncomeMultiplier()))}`;
       document.getElementById("best-run").textContent = format(state.bestRun);
       document.getElementById("egg-button").style.setProperty("--egg-size", `${Math.min(340, 210 + state.clicks * 1.3)}px`);
       document.getElementById("arcade-balance").textContent = format(state.eggs);
@@ -657,6 +901,8 @@
       renderEggShop();
       renderZoo();
       renderResearch();
+      renderBigEggZone();
+      renderGloryFeatures();
       if (state.activeTab === "stocks") renderStocks();
       const nextCost = Math.min(eggCostFor("normal"), ...upgrades.map(costFor));
       document.getElementById("meter-fill").style.width = `${Math.min(100, state.eggs / nextCost * 100)}%`;
@@ -741,6 +987,240 @@
       }));
     }
 
+    function renderBigEggZone() {
+      const unlocked = state.bigEggUnlocked || state.lifetime >= bigEggThreshold;
+      state.bigEggUnlocked = unlocked;
+      document.getElementById("big-egg-coins").textContent = format(state.bigEggCoins);
+      document.getElementById("big-egg-locked").hidden = unlocked;
+      const upgradeList = document.getElementById("big-egg-upgrades");
+      upgradeList.hidden = !unlocked;
+      const milestoneProgress = Math.max(0, state.lifetime - state.bigCoinMilestone * bigEggThreshold);
+      const shownProgress = Math.min(bigEggThreshold, milestoneProgress);
+      document.getElementById("big-egg-meter-fill").style.width = `${shownProgress / bigEggThreshold * 100}%`;
+      document.getElementById("big-egg-progress-label").textContent = unlocked
+        ? `Next Big Egg Coin: ${format(shownProgress)} / 1B new lifetime eggs`
+        : `Unlock progress: ${format(state.lifetime)} / 1B lifetime eggs`;
+      upgradeList.replaceChildren(...bigEggUpgrades.map(item => {
+        const level = state.bigEggOwned[item.id] || 0;
+        const cost = bigEggUpgradeCost(item);
+        const button = document.createElement("button");
+        button.className = "research-buy";
+        button.type = "button";
+        button.disabled = !unlocked || state.bigEggCoins < cost;
+        button.textContent = `Upgrade · ${format(cost)} Big Coins`;
+        button.setAttribute("aria-label", `Upgrade ${item.name} to level ${level + 1} for ${format(cost)} Big Egg Coins`);
+        button.addEventListener("click", () => buyBigEggUpgrade(item));
+        const entry = document.createElement("div");
+        entry.className = "research-item";
+        entry.innerHTML = `<span class="research-icon" aria-hidden="true">${item.icon}</span><span><span class="research-name">${item.name}</span><span class="research-desc">${item.description}</span><span class="research-level">Level ${level} · Next cost ${format(cost)} Big Coins</span></span>`;
+        entry.append(button);
+        return entry;
+      }));
+    }
+
+    function currentTournamentDay() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function dailyTournamentOpponents(day = currentTournamentDay()) {
+      let seed = 2166136261;
+      for (const character of day) seed = Math.imul(seed ^ character.charCodeAt(0), 16777619) >>> 0;
+      const random = () => {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        return seed / 4294967296;
+      };
+      return tournamentOpponents.map(name => ({ name, score: 6 + Math.floor(random() * 13) }));
+    }
+
+    function ensureTournamentDay() {
+      const today = currentTournamentDay();
+      if (state.tournamentDay === today) return;
+      if (tournamentInterval) clearInterval(tournamentInterval);
+      tournamentInterval = null;
+      activeTournament = null;
+      state.tournamentDay = today;
+      state.tournamentPlayed = false;
+      state.tournamentComplete = false;
+      state.tournamentScore = 0;
+      state.tournamentRank = 0;
+      state.tournamentReward = 0;
+    }
+
+    function renderTournament() {
+      ensureTournamentDay();
+      const active = Boolean(activeTournament);
+      const startButton = document.getElementById("tournament-start");
+      const tapButton = document.getElementById("tournament-tap");
+      const timer = document.getElementById("tournament-timer");
+      document.getElementById("tournament-date").textContent = `${state.tournamentDay} UTC`;
+      startButton.disabled = active || state.tournamentPlayed;
+      startButton.textContent = state.tournamentPlayed ? "Today's run used" : "Start today's run";
+      tapButton.hidden = !active;
+      tapButton.disabled = !active;
+      tapButton.textContent = `Tap! · ${active ? activeTournament.score : 0}`;
+      timer.textContent = active ? `${Math.max(0, Math.ceil((activeTournament.endsAt - Date.now()) / 1000))}s left` : "10 seconds";
+      const result = document.getElementById("tournament-result");
+      if (active) result.textContent = "Keep tapping! Your score is compared with today's AI flock.";
+      else if (state.tournamentComplete) result.textContent = `Rank ${state.tournamentRank} · ${state.tournamentScore} taps · +${state.tournamentReward} Glory Points`;
+      else if (state.tournamentPlayed) result.textContent = "Today's attempt was used before it finished. Come back after the UTC reset.";
+      else result.textContent = "Your daily attempt is ready.";
+      const rows = [
+        ...dailyTournamentOpponents(state.tournamentDay).map(opponent => ({ ...opponent, player: false })),
+        { name: "You", score: state.tournamentComplete ? state.tournamentScore : active ? activeTournament.score : null, player: true }
+      ].sort((first, second) => {
+        if (first.score === null) return 1;
+        if (second.score === null) return -1;
+        return second.score - first.score;
+      });
+      const board = document.getElementById("tournament-board");
+      const header = document.createElement("div");
+      header.className = "tournament-row";
+      header.innerHTML = "<span>Competitor</span><span>Taps</span><span>Result</span>";
+      board.replaceChildren(header, ...rows.map((entry, index) => {
+        const row = document.createElement("div");
+        row.className = `tournament-row${entry.player ? " unlocked" : ""}`;
+        const name = document.createElement("span");
+        name.textContent = `${index + 1}. ${entry.name}`;
+        const score = document.createElement("span");
+        score.textContent = entry.score === null ? "—" : String(entry.score);
+        const prize = document.createElement("span");
+        prize.textContent = entry.player && state.tournamentComplete ? `+${state.tournamentReward} Glory` : entry.player ? "You" : "AI";
+        row.append(name, score, prize);
+        return row;
+      }));
+    }
+
+    function renderSkins() {
+      const exchangeCost = Math.min(GRAHAM_CAP, gloryEggCostBase * Math.pow(2, state.gloryExchanges));
+      document.getElementById("glory-points").textContent = format(state.gloryPoints);
+      const exchangeButton = document.getElementById("glory-exchange");
+      exchangeButton.disabled = state.eggs < exchangeCost;
+      exchangeButton.textContent = `Exchange ${format(exchangeCost)} eggs · +1 Glory`;
+      document.getElementById("skin-pack").disabled = state.gloryPoints < gloryPackCost;
+      document.getElementById("egg-visual").setAttribute("data-skin", state.equippedSkin);
+      const inventory = document.getElementById("skin-inventory");
+      inventory.replaceChildren(...eggSkins.filter(skin => state.ownedSkins[skin.id] > 0).map(skin => {
+        const entry = document.createElement("div");
+        entry.className = "skin-item";
+        const swatch = document.createElement("span");
+        swatch.className = "skin-swatch";
+        swatch.setAttribute("data-skin", skin.id);
+        swatch.setAttribute("aria-hidden", "true");
+        swatch.textContent = "🥚";
+        const copy = document.createElement("span");
+        copy.className = "skin-copy";
+        const name = document.createElement("span");
+        name.className = "skin-name";
+        name.textContent = skin.name;
+        const meta = document.createElement("span");
+        meta.className = "skin-meta";
+        meta.textContent = `${skin.rarity} · Owned ${state.ownedSkins[skin.id]}${skin.chance ? ` · ${skin.chance} chance` : ""}`;
+        copy.append(name, meta);
+        const equip = document.createElement("button");
+        equip.className = "skin-equip";
+        equip.type = "button";
+        equip.disabled = state.equippedSkin === skin.id;
+        equip.textContent = equip.disabled ? "Equipped" : "Equip skin";
+        equip.addEventListener("click", () => equipEggSkin(skin.id));
+        entry.append(swatch, copy, equip);
+        return entry;
+      }));
+    }
+
+    function renderGloryFeatures() {
+      renderTournament();
+      renderSkins();
+    }
+
+    function startDailyTournament() {
+      ensureTournamentDay();
+      if (state.tournamentPlayed) return;
+      state.tournamentPlayed = true;
+      state.tournamentComplete = false;
+      state.tournamentScore = 0;
+      state.tournamentRank = 0;
+      state.tournamentReward = 0;
+      activeTournament = { day: state.tournamentDay, score: 0, endsAt: Date.now() + tournamentDurationMs };
+      save();
+      renderTournament();
+      tournamentInterval = setInterval(updateTournamentClock, 100);
+    }
+
+    function tapTournamentEgg() {
+      if (!activeTournament || Date.now() >= activeTournament.endsAt) return;
+      activeTournament.score++;
+      document.getElementById("tournament-tap").textContent = `Tap! · ${activeTournament.score}`;
+    }
+
+    function updateTournamentClock() {
+      if (!activeTournament) return;
+      if (Date.now() >= activeTournament.endsAt) {
+        finishDailyTournament();
+        return;
+      }
+      document.getElementById("tournament-timer").textContent = `${Math.ceil((activeTournament.endsAt - Date.now()) / 1000)}s left`;
+    }
+
+    function finishDailyTournament() {
+      if (!activeTournament) return;
+      clearInterval(tournamentInterval);
+      tournamentInterval = null;
+      const opponents = dailyTournamentOpponents(activeTournament.day);
+      const rank = 1 + opponents.filter(opponent => opponent.score > activeTournament.score).length;
+      const reward = rank === 1 ? 20 : rank === 2 ? 12 : rank === 3 ? 8 : 3;
+      state.tournamentComplete = true;
+      state.tournamentScore = activeTournament.score;
+      state.tournamentRank = rank;
+      state.tournamentReward = reward;
+      state.gloryPoints = Math.min(GRAHAM_CAP, state.gloryPoints + reward);
+      activeTournament = null;
+      render();
+      save();
+      showToast(`Tournament finished: rank ${rank}, +${reward} Glory Points!`);
+    }
+
+    function exchangeEggsForGlory() {
+      const cost = Math.min(GRAHAM_CAP, gloryEggCostBase * Math.pow(2, state.gloryExchanges));
+      if (state.eggs < cost) return;
+      state.eggs -= cost;
+      state.gloryPoints = Math.min(GRAHAM_CAP, state.gloryPoints + 1);
+      state.gloryExchanges++;
+      render();
+      save();
+      showToast(`Exchanged ${format(cost)} eggs for 1 Glory Point.`);
+    }
+
+    function openSkinPack() {
+      if (state.gloryPoints < gloryPackCost) return;
+      state.gloryPoints -= gloryPackCost;
+      const skin = Math.random() < 0.00005
+        ? eggSkins.find(item => item.id === "zander")
+        : eggSkins.filter(item => item.id !== "classic" && item.id !== "zander")[Math.floor(Math.random() * (eggSkins.length - 2))];
+      state.ownedSkins[skin.id] = (state.ownedSkins[skin.id] || 0) + 1;
+      document.getElementById("skin-pack-result").textContent = `Unlocked ${skin.name}!${skin.id === "zander" ? " The rarest skin!" : ""}`;
+      render();
+      save();
+      showToast(`Skin pack: ${skin.name}${skin.id === "zander" ? " · Mythic" : ""}`);
+    }
+
+    function equipEggSkin(skinId) {
+      if (!skinIds.has(skinId) || !state.ownedSkins[skinId]) return;
+      state.equippedSkin = skinId;
+      render();
+      save();
+      showToast(`${eggSkins.find(skin => skin.id === skinId).name} equipped.`);
+    }
+
+    function buyBigEggUpgrade(item) {
+      const cost = bigEggUpgradeCost(item);
+      if (!state.bigEggUnlocked || state.bigEggCoins < cost) return;
+      state.bigEggCoins -= cost;
+      state.bigEggOwned[item.id] = (state.bigEggOwned[item.id] || 0) + 1;
+      showToast(`${item.name} upgraded to level ${state.bigEggOwned[item.id]}!`);
+      render();
+      save();
+    }
+
     function buyResearch(item, buyMax = false) {
       let bought = 0;
       let spent = 0;
@@ -799,17 +1279,20 @@
         const tradeCell = document.createElement("td");
         const trade = document.createElement("div");
         trade.className = "stock-trade";
+        const tradeValue = price * quantity;
+        const buyFee = tradeValue * stockTradeTaxRate;
+        const sellFee = tradeValue * stockTradeTaxRate;
         const buyButton = document.createElement("button");
         buyButton.type = "button";
         buyButton.textContent = `Buy ${quantity}`;
-        buyButton.disabled = state.eggs < price * quantity;
-        buyButton.setAttribute("aria-label", `Buy ${quantity} shares of ${company.name} for ${format(price * quantity)} eggs`);
+        buyButton.disabled = state.eggs < tradeValue + buyFee;
+        buyButton.setAttribute("aria-label", `Buy ${quantity} shares of ${company.name} for ${format(tradeValue + buyFee)} eggs including ${format(buyFee)} tax`);
         buyButton.addEventListener("click", () => buyStock(company.id));
         const sellButton = document.createElement("button");
         sellButton.type = "button";
         sellButton.textContent = `Sell ${quantity}`;
         sellButton.disabled = shares < quantity;
-        sellButton.setAttribute("aria-label", `Sell ${quantity} shares of ${company.name}`);
+        sellButton.setAttribute("aria-label", `Sell ${quantity} shares of ${company.name} for ${format(Math.max(0, tradeValue - sellFee))} eggs after ${format(sellFee)} tax`);
         sellButton.addEventListener("click", () => sellStock(company.id));
         trade.append(buyButton, sellButton);
         tradeCell.append(trade);
@@ -850,11 +1333,14 @@
       const company = stockCompanies.find(item => item.id === companyId);
       const quantity = stockTradeQuantity();
       const price = state.market.prices[companyId];
-      const cost = price * quantity;
-      if (!company || !Number.isFinite(cost) || cost <= 0 || state.eggs < cost) return;
+      const tradeValue = price * quantity;
+      const fee = tradeValue * stockTradeTaxRate;
+      const cost = tradeValue + fee;
+      if (!company || !Number.isFinite(cost) || tradeValue <= 0 || state.eggs < cost) return;
       state.eggs -= cost;
+      state.taxesPaid += fee;
       state.market.holdings[companyId] += quantity;
-      showToast(`Bought ${quantity} share${quantity === 1 ? "" : "s"} of ${company.name}.`);
+      showToast(`Bought ${quantity} share${quantity === 1 ? "" : "s"} of ${company.name}; ${format(fee)} egg exchange tax paid.`);
       render();
       save();
     }
@@ -865,9 +1351,12 @@
       const shares = state.market.holdings[companyId] || 0;
       const price = state.market.prices[companyId];
       if (!company || shares < quantity || !Number.isFinite(price) || price <= 0) return;
+      const gross = price * quantity;
+      const fee = gross * stockTradeTaxRate;
       state.market.holdings[companyId] -= quantity;
-      state.eggs += price * quantity;
-      showToast(`Sold ${quantity} share${quantity === 1 ? "" : "s"} of ${company.name}.`);
+      state.eggs = Math.min(GRAHAM_CAP, state.eggs + Math.max(0, gross - fee));
+      state.taxesPaid = Math.min(GRAHAM_CAP, state.taxesPaid + fee);
+      showToast(`Sold ${quantity} share${quantity === 1 ? "" : "s"} of ${company.name}; ${format(fee)} egg exchange tax paid.`);
       render();
       save();
     }
@@ -944,11 +1433,15 @@
         const pet = petById[id];
         const row = document.createElement("div");
         row.className = `zoo-row pet-row ${pet.className}`;
+        const illustration = document.createElement("span");
+        illustration.className = "pet-illustration";
+        illustration.setAttribute("aria-hidden", "true");
+        illustration.textContent = pet.icon;
         const info = document.createElement("span");
         info.className = "zoo-pet-info";
         const name = document.createElement("span");
         name.className = "zoo-pet-name";
-        name.textContent = `${pet.icon} ${pet.name} · ${pet.rarity}`;
+        name.textContent = `${pet.name} · ${pet.rarity}`;
         const perk = document.createElement("span");
         perk.className = "zoo-pet-perk";
         perk.textContent = `+${(pet.bonus * 100).toFixed(0)}% egg income while equipped`;
@@ -969,7 +1462,7 @@
           render();
           save();
         });
-        row.append(info, quantity, button);
+        row.append(illustration, info, quantity, button);
         return row;
       }));
     }
@@ -1003,10 +1496,8 @@
     }
 
     function bake(event) {
-      const earned = state.clickPower * incomeMultiplier() * clickResearchMultiplier();
-      state.eggs += earned;
-      state.lifetime += earned;
-      state.runEggs += earned;
+      const earned = state.clickPower * incomeMultiplier() * clickResearchMultiplier() * bigEggClickMultiplier() * bigEggIncomeMultiplier();
+      const { net } = collectEggIncome(earned);
       state.clicks++;
       state.bestRun = Math.max(state.bestRun, state.runEggs);
       const button = document.getElementById("egg-button");
@@ -1016,7 +1507,7 @@
       const bounds = button.getBoundingClientRect();
       const float = document.createElement("span");
       float.className = "float-text";
-      float.textContent = `+${format(earned)}`;
+      float.textContent = `+${format(net)}`;
       float.style.left = `${Math.max(8, Math.min(window.innerWidth - 68, (event.clientX || bounds.left + bounds.width / 2) - 12))}px`;
       float.style.top = `${Math.max(24, (event.clientY || bounds.top + bounds.height / 2) - 8)}px`;
       document.body.append(float);
@@ -1080,12 +1571,10 @@
       save();
     }
 
-    function awardEggs(amount) {
-      state.eggs += amount;
-      state.lifetime += amount;
-      state.runEggs += amount;
-      state.bestRun = Math.max(state.bestRun, state.runEggs);
+    function awardEggs(amount, taxableBalance = state.eggs) {
+      const payout = collectEggIncome(amount, state, taxableBalance);
       render();
+      return payout;
     }
 
     function payArcadeCost(cost) {
@@ -1104,8 +1593,8 @@
         return reel;
       }));
       const prize = result.every(symbol => symbol === result[0]) ? 1000 : new Set(result).size === 2 ? 100 : 0;
-      if (prize) awardEggs(prize);
-      document.getElementById("slot-result").textContent = prize ? `Winner! You got ${format(prize)} eggs.` : "No match this time. Try again!";
+      const payout = prize ? awardEggs(prize) : { net: 0 };
+      document.getElementById("slot-result").textContent = prize ? `Winner! You received ${format(payout.net)} eggs after tax.` : "No match this time. Try again!";
       render();
       save();
     }
@@ -1118,8 +1607,8 @@
       wheel.classList.remove("turning");
       void wheel.offsetWidth;
       wheel.classList.add("turning");
-      if (prize) awardEggs(prize);
-      document.getElementById("wheel-result").textContent = prize ? `The wheel landed on ${format(prize)} eggs!` : "The wheel landed on zero. Give it another spin?";
+      const payout = prize ? awardEggs(prize) : { net: 0 };
+      document.getElementById("wheel-result").textContent = prize ? `The wheel paid ${format(payout.net)} eggs after tax.` : "The wheel landed on zero. Give it another spin?";
       render();
       save();
     }
@@ -1134,8 +1623,8 @@
         return cell;
       }));
       const prize = result.every(symbol => symbol === result[0]) ? 10000 : new Set(result).size === 2 ? 1000 : 0;
-      if (prize) awardEggs(prize);
-      document.getElementById("scratch-result").textContent = prize ? `Scratch win! You got ${format(prize)} eggs.` : "No match on this card. Better luck next time!";
+      const payout = prize ? awardEggs(prize) : { net: 0 };
+      document.getElementById("scratch-result").textContent = prize ? `Scratch win! You received ${format(payout.net)} eggs after tax.` : "No match on this card. Better luck next time!";
       render();
       save();
     }
@@ -1147,8 +1636,8 @@
       state.eggs = 0;
       document.getElementById("allin-display").textContent = won ? "🌟" : "💥";
       if (won) {
-        awardEggs(wager * 2);
-        document.getElementById("allin-result").textContent = `You won! Your ${format(wager)} egg wager doubled to ${format(wager * 2)}.`;
+        const payout = awardEggs(wager * 2, wager);
+        document.getElementById("allin-result").textContent = `You won! Your wager paid ${format(payout.net)} eggs after tax.`;
       } else {
         document.getElementById("allin-result").textContent = `You lost your ${format(wager)} egg wager. All or Nothing!`;
       }
@@ -1157,7 +1646,7 @@
     }
 
     const flappyCanvas = document.getElementById("flappy-canvas");
-    const flappyGame = { running: false, lastFrame: 0, birdY: 220, velocity: 0, pipes: [], score: 0 };
+    const flappyGame = { running: false, lastFrame: 0, birdY: 220, velocity: 0, pipes: [], score: 0, netEggs: 0 };
 
     function drawFlappy() {
       const context = flappyCanvas.getContext("2d");
@@ -1202,6 +1691,7 @@
       flappyGame.birdY = 220;
       flappyGame.velocity = 0;
       flappyGame.score = 0;
+      flappyGame.netEggs = 0;
       flappyGame.pipes = [{ x: 250, gapY: 230, passed: false }];
       document.getElementById("flappy-score").textContent = "0";
       document.getElementById("flappy-start").textContent = "Restart flight";
@@ -1226,7 +1716,7 @@
           flappyGame.score++;
           state.arcadeBest = Math.max(state.arcadeBest, flappyGame.score);
           document.getElementById("flappy-score").textContent = String(flappyGame.score);
-          awardEggs(25);
+          flappyGame.netEggs += awardEggs(25).net;
           save();
         }
         const overlapsBird = pipe.x < 91 && pipe.x + 54 > 61;
@@ -1238,13 +1728,13 @@
       else {
         state.arcadeBest = Math.max(state.arcadeBest, flappyGame.score);
         document.getElementById("flappy-best").textContent = format(state.arcadeBest);
-        document.getElementById("flappy-result").textContent = `Flight over · ${flappyGame.score} pipes · +${format(flappyGame.score * 25)} eggs`;
+        document.getElementById("flappy-result").textContent = `Flight over · ${flappyGame.score} pipes · +${format(flappyGame.netEggs)} eggs after tax`;
         save();
       }
     }
 
     function setMainTab(tabId) {
-      for (const id of ["clicker", "arcade", "pets", "rebirth", "research", "stocks", "settings"]) {
+      for (const id of ["clicker", "arcade", "pets", "glory", "rebirth", "research", "big-eggs", "stocks", "settings"]) {
         const active = id === tabId;
         document.getElementById(`${id}-tab`).hidden = !active;
         document.getElementById(`tab-${id}`).setAttribute("aria-selected", String(active));
@@ -1273,7 +1763,7 @@
     }
 
     document.getElementById("egg-button").addEventListener("click", bake);
-    for (const tabId of ["clicker", "arcade", "pets", "rebirth", "research", "stocks", "settings"]) {
+    for (const tabId of ["clicker", "arcade", "pets", "glory", "rebirth", "research", "big-eggs", "stocks", "settings"]) {
       document.getElementById(`tab-${tabId}`).addEventListener("click", () => setMainTab(tabId));
     }
     for (const gameId of ["slots", "wheel", "scratch", "flappy", "allin"]) {
@@ -1290,6 +1780,10 @@
       if (state.activeTab === "stocks" && state.stockView === "market") renderStocks();
     });
     document.getElementById("slot-play").addEventListener("click", playSlots);
+    document.getElementById("tournament-start").addEventListener("click", startDailyTournament);
+    document.getElementById("tournament-tap").addEventListener("click", tapTournamentEgg);
+    document.getElementById("glory-exchange").addEventListener("click", exchangeEggsForGlory);
+    document.getElementById("skin-pack").addEventListener("click", openSkinPack);
     document.getElementById("wheel-play").addEventListener("click", spinWheel);
     document.getElementById("scratch-play").addEventListener("click", scratchCard);
     document.getElementById("allin-play").addEventListener("click", playAllOrNothing);
@@ -1316,6 +1810,9 @@
     });
     document.getElementById("reset-button").addEventListener("click", () => {
       if (!window.confirm("Reset all progress? This clears eggs, pets, achievements, and rebirths.")) return;
+      if (tournamentInterval) clearInterval(tournamentInterval);
+      tournamentInterval = null;
+      activeTournament = null;
       state = createFreshState();
       save();
       render();
@@ -1330,10 +1827,7 @@
     setInterval(() => {
       const production = eggsPerSecond();
       if (!production) return;
-      state.eggs += production;
-      state.lifetime += production;
-      state.runEggs += production;
-      state.bestRun = Math.max(state.bestRun, state.runEggs);
+      collectEggIncome(production);
       render();
     }, 1000);
     setInterval(save, 10000);
